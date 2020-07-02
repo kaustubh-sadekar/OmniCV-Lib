@@ -3,7 +3,7 @@
 Different methods have been written for inter conversion between different mappings related to omni directional cameras.
 ## Click on respective link to know more about the functions
 
-## [1. Equirectangular image to fisheye or pinhole camera image.](eqrect2fisheye.md)
+## [1. Equirectangular image to fisheye or pinhole camera image.](https://kaustubh-sadekar.github.io/OmniCV-Lib/Equirectangular-to-fisheye.html){:target="_blank"}
 #### Possibile areas of application
 * Generate images with different focal length and distortion coefficients.
 * Generate synthetic images for training of various deep learning models.
