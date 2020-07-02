@@ -3,9 +3,8 @@ import cv2
 import numpy as np
 import math
 import sys
-sys.path.append("../")
-from fisheyeUtils import fisheyeImgConv
 import time
+from omnicv import fisheyeImgConv
 
 Img_path = sys.argv[1]
 param_file_path = "../fisheyeParams.txt"

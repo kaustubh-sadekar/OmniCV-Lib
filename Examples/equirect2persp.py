@@ -4,9 +4,7 @@ import numpy as np
 import math
 import time
 import sys
-sys.path.append("../")
-
-from fisheyeUtils import *
+from omnicv import fisheyeImgConv
 
 Img_path = sys.argv[1]
 
