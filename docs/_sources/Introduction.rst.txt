@@ -1,0 +1,15 @@
+Introduction
+============
+
+This is a **python class** for some cool python codes related to opencv.
+Check the `github link <https://github.com/kaustubh-sadekar/FunCV>`_.
+
+.. image:: spark1.*
+
+.. code-block:: python
+
+   def some_function():
+       interesting = False
+       print 'This line is highlighted.'
+       print 'This one is not...'
+       print '...but this one is.'

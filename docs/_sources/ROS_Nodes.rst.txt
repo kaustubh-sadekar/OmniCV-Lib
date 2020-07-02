@@ -1,0 +1,236 @@
+.. include:: <isonum.txt>
+
+***************************
+Documentation for ROS Nodes
+***************************
+
+OmniCV ROS Nodes
+----------------
+
+ROS is a common platform used by industry and academia for research and deployment of various robotics and vision applications. Running different ROS nodes in parallel helps in improving real-time performance. ROS also makes it easy to integrate different smaller modules into a complex project making it easy to debug and maintain. In several robotics applications it is observed that using 360 |deg| cameras are advantageous over using narrow field of view ( 90 |deg| or less ) cameras. OmniCV ROS Nodes provide an efficient and easy to use the setup for all the different kinds of interconversions related to 360|deg| images. This makes it easy for researchers and developers to perform these interconversions by integrating the OmniCV ROS nodes into their existing ROS based projects. 
+
+
+Build The ROS Nodes
+-------------------
+
+To build the OmniCV ROS nodes follow these steps.
+
+* Create a folder named omnicv in your ros workspace where you have your other ros packages.
+
+.. code-block:: shell-session
+
+	roscd src/
+	mkdir omnicv
+
+* Add the contents present inside ros_files folder to the omnicv folder created in the previous step.
+* Build the workspace.
+
+.. code-block:: shell-session
+
+   cp OmniCV/ros_files/ [PATH TO ROS WORKSPACE]/src/omnicv/
+   roscd
+   catkin_make
+
+
+omnicv_equirect2fisheye node
+----------------------------
+
+ROS node to convert equirectangular image to fisheye image
+
+.. code:: shell-session
+
+	$rosrun omnicv equirect2fisheye [mode] [outH] [outW]
+
+mode (required argument): Camera model to be used for convertion of equirectangular to fisheye image. 
+
+- mode = 0 - Use Unified Camera Model
+- mode = 1 - Use Extended Unified Camera Model
+- mode = 2 - Use Field of View camera model
+- mode = 3 - Use Doubel Sphere camera model
+
+outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)
+
+	
+**Topics that the node subscribes to**
+
+- /omnicv/equirect : Equirectangular image data to be used as input.
+- /omnicv/equirect2fisheye/alpha : Rotation about x-axis.
+- /omnicv/equirect2fisheye/beta : Rotation about y-axis.
+- /omnicv/equirect2fisheye/gamma : Rotation about z-axis.
+- /omnicv/equirect2fisheye/f : Focal length.
+- /omnicv/equirect2fisheye/xi : Distortion parameter for UCM model.
+- /omnicv/equirect2fisheye/a_ : Distortion parameter for EUCM model.
+- /omnicv/equirect2fisheye/b_ : Distortion parameter for EUCM model.
+- /omnicv/equirect2fisheye/w_ : Distortion parameter for FOV model.
+
+
+**Topics that the node publishes to**
+
+- /omnicv/fisheye : Generated fisheye image
+
+.. note::
+
+	All the topics other than /omnicv/equirect have corresponding message type of std_msgs/Float32.
+
+.. figure:: e2f.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+omnicv_equirect2persp node
+--------------------------
+
+ROS node to conver Equirectangular image to Perspective image
+
+.. code:: shell-session
+
+	$rosrun omnicv equirect2persp [outH] [outW]
+
+outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)
+
+
+**Topics that the node subscribes to**
+
+- /omnicv/equirect : Equirectangular image data to be used as input.
+- /omnicv/equirect2persp/alpha : Rotation about x-axis.
+- /omnicv/equirect2persp/beta : Rotation about y-axis.
+- /omnicv/equirect2persp/gamma : Rotation about z-axis.
+
+**Topics that the node publishes to**
+
+- /omnicv/persp : Generated perspective image
+
+.. note::
+
+	All the topics other than /omnicv/equirect have corresponding message type of std_msgs/Float32.
+
+.. figure:: eq2p.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+omnicv_equirect2cubemap node
+----------------------------
+
+ROS node to convert equirectangular image to cubemap
+
+.. code:: shell-session
+
+	$rosrun omnicv equirect2cubemap [cube_side] [modif_flag] [dice]
+
+cube_side (optional argument) : Cubemap side length (Integer value)
+modif_flag (optional argument) : Flag to modify the output mode (bool value)
+
+- modif_flag = 0 - For camera position perpendicular to ground.
+- modif_flag = 1 = For camera position parallel to ground.
+
+**Topics that the node subscribes to**
+
+- /omnicv/equirect : Equirectangular image data to be used as input.
+
+**Topics that the node publishes to**
+
+- /omnicv/cubemap : Generated cubemap image
+
+
+.. figure:: e2c.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+omnicv_cubemap2persp node
+--------------------------
+
+ROS node to conver Cubemap image to Perspective image
+
+.. code:: shell-session
+
+	$rosrun omnicv cubemap2persp [outH] [outW]
+
+outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)
+
+
+**Topics that the node subscribes to**
+
+- /omnicv/cubemap : Equirectangular image data to be used as input.
+- /omnicv/cubemap2persp/alpha : Rotation about x-axis.
+- /omnicv/cubemap2persp/beta : Rotation about y-axis.
+- /omnicv/cubemap2persp/gamma : Rotation about z-axis.
+
+**Topics that the node publishes to**
+
+- /omnicv/persp : Generated perspective image
+
+.. note::
+
+	All the topics other than /omnicv/cubemap have corresponding message type of std_msgs/Float32.
+
+.. figure:: c2p.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+omnicv_cubemap2equirect node
+----------------------------
+
+ROS node to convert equirectangular image to cubemap.
+
+.. code:: shell-session
+
+	$rosrun omnicv cubemap2equirect [outH] [outW]
+
+outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)
+
+**Topics that the node subscribes to**
+
+- /omnicv/cubemap : Cubemap image data to be used as input.
+
+**Topics that the node publishes to**
+
+- /omnicv/equirect : Generated Equirectangular image
+
+
+.. figure:: c2eq.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+omnicv_fisheye2equirect node
+----------------------------
+
+ROS node to convert fisheye image to equirectangular image.
+
+.. code:: shell-session
+
+	$rosrun omnicv fisheye2equirect [outH] [outW]
+
+outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)
+
+**Topics that the node subscribes to**
+
+- /omnicv/fisheye : Fisheye image data to be used as input.
+
+**Topics that the node publishes to**
+
+- /omnicv/equirect : Generated Equirectangular image
+
+
+.. figure:: f2e.jpg
+   :align: center
+
+   Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.
+
+
+
+`Back to examples index <Examples.html>`_
+-----------------------------------------

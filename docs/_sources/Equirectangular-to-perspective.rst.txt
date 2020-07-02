@@ -1,0 +1,223 @@
+.. include:: <isonum.txt>
+
+**********************************************************************
+Converting equirectangular and cubemap image to perspective view image
+**********************************************************************
+
+A perspective image is usually considered with a 90 |deg| field of view but the code supports other values of FOV in the horizontal 
+and vertical direction. One of the most common applications of this type of conversion is to create a 360 |deg| image/video viewer, we can also
+use this method to generate multiple novel pinhole camera images from a single 360 |deg| image. This is also useful when generating a
+VR experience or game using skyboxes.
+
+A simplified version of the math behind such conversions is explained in the following figure, to know more mathematical details refer to [1].
+
+.. figure:: PerspectiveImg.jpg
+   :align: center
+   :width: 700 px
+
+
+Python Example
+==============
+
+
+Example code for equirectangular to perspective conversion
+----------------------------------------------------------
+
+.. function:: fisheyeUtils.eqruirect2persp(img, FOV, Theta, Phi, Hd, Wd)
+
+  :param img: input cubemap image
+  :param FOV: field of view (in horizontal direction)
+  :param Theta: Viewing angle wrt z axis
+  :param Phi: VIewing angle wrt y axis
+  :param Hd: Output image height
+  :param Wd: Output image width	
+
+
+.. code-block:: python
+
+	#!/usr/bin/env/python
+	import cv2
+	import numpy as np
+	import math
+	import time
+	import sys
+	from omnicv import fisheyeImgConv
+
+
+	# path to the input equirectangular image 
+	Img_path = sys.argv[1]
+
+	equiRect = cv2.imread(Img_path)
+	cv2.namedWindow("cubemap",cv2.WINDOW_NORMAL)
+	cv2.imshow("cubemap",equiRect)
+	cv2.waitKey(0)
+
+	outShape = [400,400]
+	inShape = equiRect.shape[:2]
+	mapper = fisheyeImgConv()
+
+	FOV = 90
+	Theta = 0
+	Phi = 0
+	Hd = outShape[0]
+	Wd = outShape[1]
+	persp = mapper.eqruirect2persp(equiRect,FOV,Theta,Phi,Hd,Wd)
+	cv2.imshow("cubemap",persp)
+	cv2.waitKey(0)
+
+
+Example code for cubemap to perspective conversion
+--------------------------------------------------
+
+.. function:: fisheyeImgConv.cubemap2persp(self,img, FOV, Theta, Phi, Hd, Wd)
+
+  :param img: Input equirectangular image
+  :param FOV: Field of view (in horizontal direction)
+  :param Theta: Viewing angle wrt z axis
+  :param Phi: Viewing angle wrt y axis
+  :param Hd: Output image height
+  :param Wd: Output image width
+
+.. code-block:: python
+
+	#!/usr/bin/env/python
+	import cv2
+	import numpy as np
+	import math
+	import time
+	import sys
+	from omnicv import fisheyeImgConv
+
+	Img_path = sys.argv[1]
+
+	equiRect = cv2.imread(Img_path)
+	cv2.namedWindow("cubemap",cv2.WINDOW_NORMAL)
+	cv2.imshow("cubemap",equiRect)
+	cv2.waitKey(0)
+	outShape = [400,400]
+	inShape = equiRect.shape[:2]
+	mapper = fisheyeImgConv()
+
+	FOV = 90
+	Theta = 0
+	Phi = 0
+	Hd = outShape[0]
+	Wd = outShape[1]
+	persp = mapper.cubemap2persp(equiRect,FOV,Theta,Phi,Hd,Wd)
+	cv2.imshow("cubemap",persp)
+	cv2.waitKey(0)
+
+
+C++ Example
+===========
+
+Example code for equirectangular to perspective conversion
+----------------------------------------------------------
+
+.. function:: fisheyeImgConv::equirect2persp(const cv::Mat &img, cv::Mat &dstFrame,float FOV, 
+	float THETA, float PHI, int Hd, int Wd);
+
+  :param img: input cubemap image
+  :param FOV: field of view (in horizontal direction)
+  :param THETA: Viewing angle wrt z axis
+  :param PHI: VIewing angle wrt y axis
+  :param Hd: Output image height
+  :param Wd: Output image width
+  :param dstFrame: Output images
+
+.. code-block:: cpp
+
+	#include<iostream>
+	#include<opencv2/opencv.hpp>
+	#include"../omnicv/utils.hpp"
+	#include <opencv2/core/core.hpp>
+
+	// Creating the display window
+	int H = 500;
+	int W = 500;
+
+	std::string WINDOW_NAME{"viewer"};
+
+	int main()
+	{
+	  cv::namedWindow(WINDOW_NAME,CV_WINDOW_NORMAL);
+
+	  cv::Mat frame;
+	  cv::Mat outFrame;
+
+	  frame = cv::imread("../data/equirect_temp1.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+	  mapper1.equirect2persp(frame,outFrame,90,120,45, 400,400);
+	  
+
+	  return 0;
+	}
+
+
+Example code for cubemap to perspective conversion
+--------------------------------------------------
+
+.. function:: fisheyeImgConv::cubemap2persp(const cv::Mat &img1, cv::Mat &dstFrame,float FOV,
+	float THETA, float PHI, int Hd, int Wd);
+
+  :param img: Input equirectangular image
+  :param FOV: Field of view (in horizontal direction)
+  :param Theta: Viewing angle wrt z axis
+  :param Phi: Viewing angle wrt y axis
+  :param Hd: Output image height
+  :param Wd: Output image width
+  :param dstFrame: Output image
+
+.. code-block:: cpp
+
+	#include<iostream>
+	#include<opencv2/opencv.hpp>
+	#include"../omnicv/utils.hpp"
+	#include <opencv2/core/core.hpp>
+
+	// Creating the display window
+	int H = 500;
+	int W = 500;
+
+	std::string WINDOW_NAME{"viewer"};
+
+	int main()
+	{
+	  cv::namedWindow(WINDOW_NAME,CV_WINDOW_NORMAL);
+	  // cv::resizeWindow(WINDOW_NAME, 400, 400);
+
+	  cv::Mat frame;
+	  cv::Mat outFrame;
+
+	  frame = cv::imread("../data/cubemap_dice.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+
+	  mapper1.cubemap2persp(frame,outFrame,90,120,45, 400,400);
+
+	  return 0;
+	}
+
+
+For a more detailed example refer to the following `code </Examples/equirect2persp.py>`_. for equirectangular to cubemap projection and refer `this code </Examples/cubemap2persp.py>`_.
+
+.. |Mode1| image:: eqrect2persp.*
+
+.. |Mode2| image:: cubemap2persp_dice.*
+
++----------------------------------------+----------------------------------------+
+| Equirectangular to perspective image   | Cubemap to perspective image           |
++========================================+========================================+
+| |Mode1|                                | |Mode2|                                |
++----------------------------------------+----------------------------------------+
+
+
+Reference
+=========
+**[1]** Araújo, António. (2018). Drawing Equirectangular VR Panoramas with Ruler, Compass, and Protractor. Journal of Science and Technology of the Arts. 10. 10.7559/citarj.v10i1.471. 
+
+`Back to examples index <Examples.html>`_
+-----------------------------------------

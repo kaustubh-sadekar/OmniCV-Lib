@@ -1,0 +1,46 @@
+.. include:: <isonum.txt>
+
+****************************************************************************************************
+GUI to determine fisheye camera parameters like aperture and fisheye radius for further conversions.
+****************************************************************************************************
+
+This is an important use case that any user needs to use once to get the parameters of the fisheye camera. These parameters are used in the conversion of fisheye image to any other type of image. 
+The GUI makes it easy for users to determine these parameters for fisheye image/video from an unknown camera.
+
+Usage
+-----
+
+There are two main stages of using this GUI.
+
+1. Finding the apparent radius of the fisheye camera and the camera center coordinates.
+  
+  * Adjust the center of the circle using the `cx` and `cy` trackbars.
+  * Ensure the circle is in the center of the fisheye circle.
+  * Increase the radius of the circle and make sure the circle overlaps the fisheye camera output.
+  * Press escape for saving the radius and center coordinates.
+  
+2. Finding the aperture and refining the image center.
+  
+  * Increase the aperture to a large value using the `aperture` trackbar.
+  * Refine the centers using the `cx` and `cy` trackerbars. To do so, align the white small white circle with the intersection point of the horizontal and vertical green lines.
+  * Adjust the aperture such that the major portion of the image is aligned inside the left and right green vertical lines.
+  * Press escape for saving the aperture and refined center coordinates.
+  
+Once the process is completed the parameters are saved in `fisheyeParams.txt`. You need to pass the path of this file when converting the fisheye image to any other format.
+
+Sample Demo
+-----------
+
+.. figure:: getRadius.*
+   :align: center
+
+   Step 1
+
+
+.. figure:: FisheyeParams.*
+   :align: center
+
+   Step 2
+
+`Back to applications index <Applications.html>`_
+-------------------------------------------------

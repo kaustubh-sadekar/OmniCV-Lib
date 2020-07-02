@@ -1,0 +1,287 @@
+.. include:: <isonum.txt>
+
+*************************************************
+Converting equirectangular image to fisheye image
+*************************************************
+
+**What is an equirectangular image?**
+
+Converting equirectangular image to fisheye image It is a method of representing the curved spherical 3D world on a 2D plane in the form of longitudes and latitudes.
+An equirectangular image is always in a 2:1 ratio. Equirectangular images are relatively easy to visualize and are also in the form of a rectangular image. It is not only used to create 2D world maps but also to represent imagery from a full sphere rather than just a small window onto the world.[1]
+
+.. figure:: https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg/800px-Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg
+   :align: center
+
+   An example of an equirectangular image
+
+
+Converting an equirectangular image to fisheye image
+----------------------------------------------------
+
+For converting an equirectangular image to a fisheye image, the equirectangular image is considered to be projected on a unit sphere using the equivalent longitude and latitude coordinates of the equirectangular image and then this information is later projected on an imaging plane based on a camera model. There are several camera models proposed in the literature. OmniCV library provides implementations for several types of camera models which include the **Unified Camera Model (UCM)** [5], **Extended Unified Camera Model (EUCM)** [6], **Field Of View (FOV)** Camera model [7] and **Double Sphere** Camera Model [3].
+
+The code for Unified Camera Model is inspired from, DeepCalib[2] and its `github repository <https://github.com/alexvbogdan/DeepCalib>`_. The repository provides python which can be further modified and used for desired purpose.
+
+Python Example
+==============
+
+.. function:: fisheyeImgConv.equirect2Fisheye_UCM(img,outShape,f=50,xi=1.2,angles=[0,0,0])
+
+	Function to convert equirectangular image to fisheye image using the unified camera model (UCM).
+
+   :param img: Input equirectangular image
+   :param outShape: list of [Image_Height,Image_Width] in pixels
+   :param f: Focal lenght
+   :param xi: Distortion coefficient
+   :param angles: List of camera [roll,pitch,yaw]
+   :rtype: Numpy array
+
+
+.. function:: fisheyeImgConv.equirect2Fisheye_EUCM(img,outShape,f=50,a_=0.5,b_=0.5,angles=[0,0,0])
+
+	Function to convert equirectangular image to fisheye image using the extended unified camera model (EUCM).
+
+   :param img: Input equirectangular image
+   :param outShape: list of [Image_Height,Image_Width] in pixels
+   :param f: Focal lenght
+   :param a_: Distortion coefficient
+   :param b_: Distortion coefficient
+   :param angles: List of camera [roll,pitch,yaw]
+   :rtype: Numpy array
+
+.. function:: fisheyeImgConv.equirect2Fisheye_FOV(img,outShape,f=50,w_=0.5,angles=[0,0,0])
+
+	Function to convert equirectangular image to fisheye image using the Field of View (FOV) camera model.
+
+   :param img: Input equirectangular image
+   :param outShape: list of [Image_Height,Image_Width] in pixels
+   :param f: Focal lenght
+   :param w_: Distortion coefficient
+   :param angles: List of camera [roll,pitch,yaw]
+   :rtype: Numpy array
+
+
+.. function:: fisheyeImgConv.equirect2Fisheye_DS(img,outShape,f=50,a_=0.5,xi_=0.5,angles=[0,0,0])
+
+	Function to convert equirectangular image to fisheye image using the Double Sphere (DS) camera model.
+
+   :param img: Input equirectangular image
+   :param outShape: list of [Image_Height,Image_Width] in pixels
+   :param f: Focal lenght
+   :param a_: Distortion coefficient
+   :param xi_: Distortion coefficient
+   :param angles: List of camera [roll,pitch,yaw]
+   :rtype: Numpy array
+
+
+**Example code**
+
+.. code-block:: python
+
+	#!/usr/bin/env/python
+	import cv2
+	import numpy as np
+	import math
+	import time
+	import sys
+	from omnicv import fisheyeImgConv
+
+	# Import equirectangular image
+	equiRect = cv2.imread(IMAGE_PATH)
+
+	# Defining output shape
+	outShape = [250,250]
+
+	# Creating mapper object
+	mapper = fisheyeImgConv()
+
+	# Converting equirectangular to fisheye using Unified Camera model (UCM)
+	fisheye = mapper.equirect2Fisheye_UCM(equiRect,outShape=outShape,xi=0.5)
+	cv2.imshow("UCM Model Output",fisheye)
+	cv2.waitKey(0)
+
+	# Converting equirectangular to fisheye using Extended UCM model
+	fisheye = mapper.equirect2Fisheye_EUCM(equiRect,outShape=[250,250],f=100,a_=0.4,b_=2,angles=[0,0,0])
+	cv2.imshow("EUCM Model Output",fisheye)
+	cv2.waitKey(0)
+
+	# Converting equirectangular to fisheye using Field Of Vide (FOV) model
+	fisheye = mapper.equirect2Fisheye_FOV(equiRect,outShape=[250,250],f=40,w_=0.5,angles=[0,0,0])
+	cv2.imshow("FOV model Output",fisheye)
+	cv2.waitKey(0)
+
+	# Converting equirectangular to fisheye using Double Sphere (DS) model
+	fisheye = mapper.equirect2Fisheye_DS(equiRect,outShape=[250,250],f=90,a_=0.4,xi_=0.8,angles=[0,0,0])
+	cv2.imshow("DS Model Output",fisheye)
+	cv2.waitKey(0)
+
+	# Changing the distortion coefficient for (UCM)
+	fisheye = mapper.equirect2Fisheye(equiRect,outShape=outShape,xi=0.2)
+	cv2.imshow("fisheye",fisheye)
+	cv2.waitKey(0)
+
+	# Rotate the sphere
+	fisheye = mapper.equirect2Fisheye(equiRect,outShape=outShape,angles=[90,0,0])
+	cv2.imshow("fisheye",fisheye)
+	cv2.waitKey(0)
+
+
+C++ Example
+-----------
+
+.. function:: fisheyeImgConv::equirect2Fisheye_UCM(const cv::Mat &img, cv::Mat &dstFrame, cv::Size outShape, 
+	float f=50, float xi=1.2,float alpha=0, float beta=0, float gamma=0);
+
+	Function to convert equirectangular image to fisheye image using the unified camera model (UCM).
+
+   :param img: Input equirectangular image.
+   :param outShape: list of [Image_Height,Image_Width] in pixels.
+   :param f: Focal lenght.
+   :param xi: Distortion coefficient.
+   :param alpha: Rotation of camera about X axis.
+   :param beta: Rotation of camera about Y axis.
+   :param gamma: Rotation of camera about Z axis.
+   :param dstFrame: Output image.
+
+
+.. function:: fisheyeImgConv::equirect2Fisheye_EUCM(const cv::Mat &img, cv::Mat &dstFrame, cv::Size outShape, float f=50, 
+	float a_ = 0.5, float b_=0.5, float alpha=0, float beta=0, float gamma=0);
+
+	Function to convert equirectangular image to fisheye image using the extended unified camera model (EUCM).
+
+   :param img: Input equirectangular image.
+   :param outShape: list of [Image_Height,Image_Width] in pixels.
+   :param f: Focal lenght.
+   :param a_: Distortion coefficient.
+   :param b_: Distortion coefficient.
+   :param alpha: Rotation of camera about X axis.
+   :param beta: Rotation of camera about Y axis.
+   :param gamma: Rotation of camera about Z axis.
+   :param dstFrame: Output image.
+
+.. function:: fisheyeImgConv::equirect2Fisheye_FOV(const cv::Mat &img, cv::Mat &dstFrame, cv::Size outShape, float f=50, 
+	float w_=0.5, float alpha=0, float beta=0, float gamma=0);
+
+	Function to convert equirectangular image to fisheye image using the Field of View (FOV) camera model.
+
+   :param img: Input equirectangular image.
+   :param outShape: list of [Image_Height,Image_Width] in pixels.
+   :param f: Focal lenght.
+   :param w_: Distortion coefficient.
+   :param alpha: Rotation of camera about X axis.
+   :param beta: Rotation of camera about Y axis.
+   :param gamma: Rotation of camera about Z axis.
+   :param dstFrame: Output image.
+
+.. function:: fisheyeImgConv::equirect2Fisheye_DS(const cv::Mat &img, cv::Mat &dstFrame, cv::Size outShape, float f=50, 
+	float a_ = 0.5, float xi_=0.5, float alpha=0, float beta=0, float gamma=0);
+
+	Function to convert equirectangular image to fisheye image using the Double Sphere (DS) camera model.
+
+   :param img: Input equirectangular image.
+   :param outShape: list of [Image_Height,Image_Width] in pixels.
+   :param f: Focal lenght.
+   :param a_: Distortion coefficient.
+   :param xi_: Distortion coefficient.
+   :param alpha: Rotation of camera about X axis.
+   :param beta: Rotation of camera about Y axis.
+   :param gamma: Rotation of camera about Z axis.
+   :param dstFrame: Output image.
+
+
+**Example code**
+
+.. code-block:: cpp
+
+	#include<iostream>
+	#include<opencv2/opencv.hpp>
+	#include"../omnicv/utils.hpp"
+	#include <opencv2/core/core.hpp>
+
+	// Creating the display window
+	int H = 500;
+	int W = 500;
+
+	std::string WINDOW_NAME{"viewer"};
+
+	int main()
+	{
+	  cv::namedWindow(WINDOW_NAME,CV_WINDOW_NORMAL);
+	  // cv::resizeWindow(WINDOW_NAME, 400, 400);
+
+	  cv::Mat frame;
+	  cv::Mat outFrame;
+
+	  // ##### 1. Example for equirectangular to fisheye image conversion using Unified camera model ##########
+	  frame = cv::imread("../data/equirect_temp1.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+	  mapper1.equirect2Fisheye_UCM(frame,outFrame, cv::Size (250,250),100,0.9);
+	  cv::imshow("Unified Camera Model model output",outFrame);
+	  cv::waitKey(0);
+	  
+	  
+	  // ##### 2. Example for equirectangular to fisheye image conversion using Extended Unified camera model ##########
+	  frame = cv::imread("../data/equirect_temp1.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+	  mapper1.equirect2Fisheye_EUCM(frame,outFrame, cv::Size (250,250),100,0.4,2);
+	  cv::imshow("Extended Unified Camera Model model output",outFrame);
+	  cv::waitKey(0);
+	  
+
+	  // ##### 3. Example for equirectangular to fisheye image conversion using Field of View camera model ##########
+	  frame = cv::imread("../data/equirect_temp1.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+	  mapper1.equirect2Fisheye_FOV(frame,outFrame, cv::Size (250,250),50,1.2);
+	  cv::imshow("Field of View model output",outFrame);
+	  cv::waitKey(0);
+	  
+
+	  // ##### 4. Example for equirectangular to fisheye image conversion using Double Sphere camera model ##########
+	  frame = cv::imread("../data/equirect_temp1.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+	  fisheyeImgConv mapper1;
+	  mapper1.equirect2Fisheye_DS(frame,outFrame, cv::Size (250,250),50,0.4,0.8);
+	  cv::imshow("Double Sphere model output",outFrame);
+	  cv::waitKey(0);
+	  
+	  return 0;
+	}
+
+
+
+Results
+-------
+
+.. figure:: eqrect2fisheye.*
+   :align: center
+
+   Converting equirectangular image to fisheye image using UCM model
+
+refer to the `example code <https://github.com/kaustubh-sadekar/OmniCV/blob/master/Examples/equirect2fisheye.py>`_. to know the other ways of using this conversion
+
+
+Reference
+=========
+**[1]** Google AR VR blog - https://blog.google/products/google-vr/bringing-pixels-front-and-center-vr-video/
+
+**[2]** Bogdan, Oleksandr & Eckstein, Viktor & Rameau, François & Bazin, Jean-Charles. (2018). DeepCalib: a deep learning approach for automatic intrinsic calibration of wide field-of-view cameras. 1-10. 10.1145/3278471.3278479. 
+
+**[3]** Usenko, Vladyslav & Demmel, Nikolaus & Cremers, Daniel. (2018). The Double Sphere Camera Model. 
+
+**[4]** Kannala, Juho & Brandt, Sami. (2006). A Generic Camera Model and Calibration Method for Conventional, Wide-Angle, and Fish-Eye Lenses. IEEE transactions on pattern analysis and machine intelligence. 28. 1335-40. 10.1109/TPAMI.2006.153.
+
+**[5]** C. Geyer and K. Daniilidis. A unifying theory for central panoramic systems and practical implications. In D.Vernon, editor, 	Computer Vision — ECCV 2000, pages 445–461, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.
+
+**[6]** B. Khomutenko, G. Garcia, and P. Martinet. An enhanced unified camera model. IEEE Robotics and Automation Letters, 1(1):137–144, Jan 2016.
+
+**[7]** F. Devernay and O. Faugeras. Straight lines have to be straight. Machine vision and applications, 13(1):14–24, 2001.
+
+`Back to examples index <Examples.html>`_
+-----------------------------------------

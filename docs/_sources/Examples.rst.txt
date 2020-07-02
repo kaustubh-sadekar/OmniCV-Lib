@@ -1,0 +1,104 @@
+.. include:: <isonum.txt>
+
+******************************************************
+Example for users to understand how to use the library
+******************************************************
+
+Different methods have been written for interconversion between different mappings related to omnidirectional cameras.
+
+1. `Equirectangular image to fisheye or pinhole camera image <Equirectangular-to-fisheye.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Generate images with different focal length and distortion coefficients.
+* Generate synthetic images for the training of various deep learning models.
+* Image augmentation
+* Creating interesting visual effects with 360 |deg| videos.
+Some of the above-mentioned applications have been discussed in detail in the application notes sections.
+
+.. figure:: eqrect2fisheye.*
+   :align: center
+   
+   Example of conversion of equirectangular image to fisheye image
+
+
+2. `Fisheye image to equirectangular image <Fisheye-to-equirectangular.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Used for stitching and creating a 360 |deg| video from two fisheye cameras facing away from each other.
+* To upload omnidirectional camera videos to youtube which can support the 360 |deg| viewer GUI.
+* Used as an interconversion step
+
+.. figure:: fisheye2eqrect1.*
+   :align: center
+   
+   Example of conversion of fisheye image to equirectangular image
+
+
+3. `Equirectangular image to cubemap image in horizontal or dice format <Equirectangular-to-cubemap.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Useful to create cubemap environment textures, for video games or VR application, from a given equirectangular image.
+* To remove distortions generated due to the fisheye lens.
+* Used in visual SLAM methods where omni directional cameras are used.
+
+.. figure:: equirect2cubemap_dice.*
+   :align: center
+   
+   Example of conversion of equirectangular image to cubemap image
+
+
+4. `Cubemap image to equirectangular image <Equirectangular-to-cubemap.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Create a compressed equirectangular form of texture maps which can be later converted to cubemap and used as texture maps.
+* Intermediate step when using omnidirectional cameras.
+* Convert cubemap based images into a format that can be uploaded to a 360 |deg| image/video viewer.
+
+.. figure:: cube2eqrect_dice.*
+   :align: center
+   
+   Example of conversion of cubemap to equirectangular image
+
+
+5. `Convert equirectangular image to perspective image with desired field of view and viewing angles <Equirectangular-to-perspective.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Creating different perspective views in a 360 |deg| video/image.
+* Object detection in 360 |deg| videos with existing pre-trained models.
+* Creating a GUI to view 360 |deg| videos and images.
+* Surveillance robots using omnidirectional cameras.
+
+.. figure:: eqrect2persp.*
+   :align: center
+   
+   Example of conversion of equirectangular image to perspective image
+
+
+6. `Convert cubemap image to perspective image with desired field of view and viewing angles <Equirectangular-to-perspective.html>`_
+------------------------------------------------------------------------------------------
+
+**Possible areas of application**
+
+* Create different perspective views in a 360 |deg| video/image.
+* Creating a GUI to view 360 |deg| videos and images.
+* Simulate and analyze a texture map in a video game.
+
+.. figure:: cubemap2persp_dice.*
+   :align: center
+   
+   Example of conversion of cubemap image to perspective image
+
+
+`Back to home page <index.html>`_
+---------------------------------
+

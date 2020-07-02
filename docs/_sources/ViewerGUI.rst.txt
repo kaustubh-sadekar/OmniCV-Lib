@@ -1,0 +1,55 @@
+.. include:: <isonum.txt>
+
+*********************************************************************************************************
+GUI to view an equirectangular image in 360 |deg| format with control trackbars for FOV and viewing angles
+*********************************************************************************************************
+
+**You can download any 360 |deg| video from youtube and view it using the GUI and enjoy the 360 |deg| viewing experience**
+
+This application is a small GUI that can be used to change the FOV and viewing angles to view any 360 |deg| video. NOTE: This is just a basic example and not a full-fledged software. It does not process any audio.
+The main objective of creating this GUI was to show different outputs one can generate from an equirectangular image based on various parameters.
+
+Following methods of the library are used in this GUI:
+
+* eqruirect2persp()
+* fisheye2equirect()
+* equirect2cubemap()
+* cubemap2persp()
+
+Usage
+-----
+
+To run the gui use the following command:
+
+.. code-block:: shell-session
+
+	python3 ViewerGUI.py <INPUT_FILE_PATH> <VIDEO_FLAG> <MODE_FLAG>
+
+* INPUT_FILE_PATH : Path for the input 360&ged; video or image.
+* VIDEO_FLAG : Set it = 1 if input file is a video else set it = 0
+* MODE_FLAG : set it = 0 if input is an equirectangular image, = 1 if it is a fisheye image with camera placed perpendicular to the ground, = 2 if it is a fisheye image with camera placed parallel to the ground. 
+
+outputs
+-------
+
+.. figure:: 360Viewer.*
+   :align: center
+   :width: 600 px
+
+   360 |deg| viewer mode 0
+
+.. figure:: 360Viewer2.*
+   :align: center
+   :width: 600 px
+
+   360 |deg| viewer mode 1
+
+.. figure:: 360Viewer3.*
+   :align: center
+   :width: 600 px
+
+   360 |deg| viewer mode 2
+
+
+`Back to applications index <Applications.html>`_
+-----------------------------------------

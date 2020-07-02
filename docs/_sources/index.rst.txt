@@ -1,0 +1,155 @@
+.. include:: <isonum.txt>
+
+Welcome to OmniCV Documentation
+===============================
+
+Introduction
+============
+
+A **computer vision library for omnidirectional(360 degree) cameras**. This package is divided into two parts:
+
+* **Basic functions** for inter-conversion of different types of mappings associated with omnidirectional cameras, virtual reality, and 360 |deg| videos, like cubemap, spherical projections, perspective projection, and equirectangular projection.
+* **Software applications** like ** 360-degree video viewer**, **fisheye image generator** with variable intrinsic properties, GUI to determine **fisheye camera parameters**.
+
+
+Objectives of the OmniCV library
+--------------------------------
+
+This library has been developed with the following objectives:
+
+* **Quick and easy** to use API to encourage and enhance the research in areas using omnidirectional cameras.
+* To support **real-time** applications.
+* Provide extensions in **python** as well as **C++** as they are the languages used by researchers.
+* Provide **ROS package** to use in robotics research. 
+
+:doc:`Click here to learn more about omnidirectional cameras <Omnidirectional-Cameras>`
+
+
+Output Gallery
+--------------
+
+
+Some interesting 360 |deg| video effects
+
+
+.. |Mode1| image:: eqrect2FisheyeFet2.*
+
+.. |Mode2| image:: eqrect2FisheyeFet1.*
+
++---------+---------+
+| |Mode1| | |Mode2| |
++---------+---------+
+
+
+Creating custom fisheye images
+
+.. |Mode3| image:: eqrect2fisheye.*
+
+.. |Mode4| image:: eqrect2Fisheye2.*
+
++---------+---------+
+| |Mode3| | |Mode4| |
++---------+---------+
+
+
+GUI to determine fisheye camera parameters
+
+.. |Mode5| image:: getRadius.*
+
+.. |Mode6| image:: FisheyeParams.*
+
++---------+---------+
+| |Mode5| | |Mode6| |
++---------+---------+
+
+
+Horizontal and vertical orientation viewing mode support
+
+.. |Mode7| image:: 360Viewer2.*
+
+.. |Mode8| image:: 360Viewer3.*
+
++---------+---------+
+| |Mode7| | |Mode8| |
++---------+---------+
+
+
+Index to theory examples , application notes and ROS nodes
+----------------------------------------------------------
+
+.. toctree::
+	:maxdepth: 1
+	
+	index
+	Omnidirectional-Cameras
+	Examples
+	Applications
+	ROS_Nodes
+
+
+Installation guide
+==================
+
+Python version
+---------------
+
+The python version of the package is available on PyPi and can be installed using pip.
+
+.. code-block:: shell-session
+
+	pip3 install omnicv
+
+
+To download it from source 
+
+* Clone the repository
+* Run the setup.py file
+
+.. code-block:: shell-session
+
+	git clone https://github.com/kaustubh-sadekar/OmniCV.git
+	cd OmniCV/
+	sudo python3 setup.py install
+
+
+C++ version
+-----------
+
+To install the C++ extensions follow these steps.
+
+* Clone the repository
+* cd to build directory
+* build the files using CMake
+* Include `imgMap.cpp, utils.hpp` in the `CMakeLists.txt`.
+
+.. code-block:: shell-session
+
+	git clone https://github.com/kaustubh-sadekar/OmniCV.git
+	cd OmniCV/build
+	cmake CMakeLists.txt
+	make
+	cd ..
+
+**run the built code (here main_code.cpp)**
+
+.. code-block:: shell-session
+
+	./build/main_code
+
+
+Running The Tests
+=================
+
+After installing the library, run the following commands to run the non visual and visual tests respectively.
+
+.. code-block:: shell-session
+
+	cd OmniCV/tests/
+	# Non visual tests
+	bash test.sh 0
+	# Visual tests
+	bash test.sh 1
+
+
+
+**NOTE : Images labeled under `labeled to reuse` have been used for the experiments.**

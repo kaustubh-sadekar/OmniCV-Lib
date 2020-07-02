@@ -1,0 +1,271 @@
+.. include:: <isonum.txt>
+
+******************************************************************
+Interconversion between the equirectangular image to cubemap image 
+******************************************************************
+
+An equirectangular image contains 180 |deg| vertical and 360 |deg| horizontal information of the world hence it can be represented as a spherical imaging plane, i.e. the information of the world is captured on a sphere.
+
+What is a cubemap ?
+--------------------
+
+A cubemap is also a way to represent the 360 |deg| information of an environment. Just like an equirectangular image, a cubemap is also a form of representing 360 |deg| image. How do we get a cube map?
+
+As discussed before, a 360 |deg| image can be assumed to be projected on a sphere. Now imagine you create a cube, tightly enclosing the sphere and project the information that is on a sphere to the faces of the enclosing cube. All the six faces of such a cube are combined in a single image forming a cube map.
+
+Refer `this link <http://www.paul-reed.co.uk/programming.html>`_. for better understanding of generating of cubemaps from an equirectangular image.
+
+Advantages of cubemaps[2]
+--------------------------
+
+* Removes distortions inherent in sphere mapping.
+* Efficient computation.
+* Uses the entire resolution of the image.
+* Easy to understand and generate.
+
+Due to the above advantages, cubemaps are widely used to generate the environment in video games.
+
+Dice and horizontal formats of cubemap
+--------------------------------------
+
+Faces of the cube can be arranged in different ways to generate a cube map image. The two most common ways are dice format and horizontal format. In dice format, the faces are arranged as if the cube was cut open and spread on a flat surface. It has Top face in the first row, back, left, front and right face in the middle row and bottom face in the last row. In a horizontal format, all the images are concatenated horizontally in a single row. Thus cube map images in dice format have a ratio of 3:4 of height to width ratio and cube map images in horizontal format have a ratio of 1:6 of height to width. Examples of both formats are shown in the following figure for better understanding.
+
+.. |Mode1| image:: equirect2cubemap.*
+
+.. |Mode2| image:: equirect2cubemap_dice.*
+
++----------------------------------------+----------------------------------------+
+| Equirectangular to horizontal cubmap   | Equirectangular to dice type cubemap   |
++========================================+========================================+
+| |Mode1|                                | |Mode2|                                |
++----------------------------------------+----------------------------------------+
+
+
+Deriving the forward and inverse map for equirectangular to cubemap image is simply a combination of some interconversions between spherical coordinate system, cartesian coordinate system, and image coordinate system.[1]
+
+To know more about how this type of conversion can be useful in game developement refer `this blog <https://medium.com/@onix_systems/how-to-use-360-equirectangular-panoramas-for-greater-realism-in-games-55fadb0547da>`_.
+
+`Click here </Examples/theory1.pdf>`_. for a simplified explaination of the math behind these conversions.
+
+Similar conversions are available on `this repository <https://github.com/sunset1995/py360convert>`_ [3]. Several changes have been made to improve the real-time performance of the library.
+
+**contributions**
+
+- **Improved speed** of existing python code by optimising the code. Speed comparison is enlisted in the table below.
+
++-------------------------+------------------------+----------------------------------+--------------+---------------+
+| Input image resolution | Output image resolution |           Conversion type        | py360convert | OmniCV (ours) |+=========================+========================+==================================+==============+===============+
+| 800x1600               | 52.46 s                 |   Equirectangular to Perspective | 147 ms       |  72 ms        |
++------------------------+-------------------------+----------------------------------+--------------+---------------+
+| 800x1600               | 12.73 s                 |   Equirectangular to Cubemap     | 177 ms       |  44 ms        |
++------------------------+-------------------------+----------------------------------+--------------+---------------+
+| 768x1024               | 3.48 s                  |   Cubemap to Equirectangular     | 245 ms       |  65 ms        |
++------------------------+-------------------------+----------------------------------+--------------+---------------+
+
+- **C++ based functions** for above implimentations.
+- **ROS compatible node** for above implimentations.
+
+Python Example
+--------------
+
+Converting equirectangular image to cubemap
+===========================================
+
+.. function:: fisheyeImgConv.equirect2cubemap(srcFrame,side=256,modif=False,dice=False)
+
+  :param srcFrame: Input equirectangular image
+  :param side: Width of face of the cube in pixels
+  :param modif: Flag to be set when the fisheye camera is placed parallel to the ground.
+  :param dice: Flag to be set when cubemap output is needed in dice form and not horiontal form.
+
+
+.. code-block:: python
+
+	#!/usr/bin/env/python
+	import cv2
+	import numpy as np
+	import math
+	import time
+	import sys
+	fromm omnicv import fisheyeImgConv
+
+	# Path to the equirectangular image
+	img_path = sys.argv[1]
+	# dice = 1 if output needed in dice form else output is returned in horiontal form
+	dice = int(sys.argv[2])
+
+	# Reading an equirectangular image
+	equiRect = cv2.imread(img_path)
+
+	# Creating a mapper object
+	mapper = fisheyeImgConv()
+
+	# Generating cubemap from equirectangular image
+	cubemap = mapper.equirect2cubemap(equiRect,side=256,dice=dice)
+
+	cv2.imshow("cubemap",cubemap)
+	cv2.waitKey(0)
+
+
+`click here </Examples/equirect2cubemap.py>`_ for a more detailed example for converting equirectangular image to cubemap image.
+
+Converting cubemap to equirectangluar image
+===========================================
+
+.. function:: fisheyeImgConv.cubemap2equirect(srcFrame,outShape):`
+
+  :param srcFrame: Input cubemap image
+  :param outShape: Desired shape of output equirectangular image. list [Image_height,Image_width]
+
+
+.. code-block:: python
+
+	#!/usr/bin/env/python
+	import cv2
+	import numpy as np
+	import math
+	import time
+	import sys
+	fromm omnicv import fisheyeImgConv
+
+	# Path to the cubemap image
+	Img_path = sys.argv[1]
+
+	# Reading the cubemap image
+	cubemap = cv2.imread(Img_path)
+
+	# Shape of the output image [Height,Width]
+	outShape = [400,800]
+
+	# Creating mapper object
+	mapper = fisheyeImgConv()
+
+	# Applying the map
+	equirect = mapper.cubemap2equirect(cubemap,outShape)
+	cv2.imshow("Image",equirect)
+	cv2.waitKey(0)
+
+
+`click here </Examples/cubemap2equirect.py>`_. for a more detailed example of converting a cubemap image to an equirectangular image.
+
+
+C++ Example
+-----------
+
+Converting equirectangular image to cubemap
+===========================================
+
+.. function:: fisheyeImgConv::eqrect2cubemap(const cv::Mat &srcFrame,cv::Mat &dstFrame, 
+		const int side=256, const bool modif=false, const bool dice = false);
+
+  :param srcFrame: Input equirectangular image.
+  :param side: Width of face of the cube in pixels.
+  :param modif: Flag to be set when the fisheye camera is placed parallel to the ground.
+  :param dice: Flag to be set when cubemap output is needed in dice form and not horiontal form.
+  :param dstFrame: Outpu image.
+
+
+.. code-block:: cpp
+
+	#include<iostream>
+	#include<opencv2/opencv.hpp>
+	#include"../omnicv/utils.hpp"
+	#include <opencv2/core/core.hpp>
+
+	// Creating the display window
+	int H = 500;
+	int W = 500;
+
+	std::string WINDOW_NAME{"viewer"};
+
+	int main()
+	{
+	  cv::namedWindow(WINDOW_NAME,CV_WINDOW_NORMAL);
+	  
+	  cv::Mat frame;
+	  cv::Mat outFrame;
+
+	  frame = cv::imread("../data/equirect2.jpeg");
+	  fisheyeImgConv mapper1;
+
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+
+	  mapper1.eqrect2cubemap(frame,outFrame,256,true,true);
+
+	  cv::imshow(WINDOW_NAME,outFrame);
+	  cv::waitKey(0);
+
+	  mapper1.applyMap(1,frame,outFrame);
+	  cv::imshow(WINDOW_NAME,outFrame);
+	  cv::waitKey(0);
+	  
+	  return 0;
+	}
+
+
+Converting cubemap to equirectangluar image
+===========================================
+
+.. function:: fisheyeImgConv::cubemap2equirect(const cv::Mat &srcFrame1, 
+	const cv::Size outShape, cv::Mat &outFrame);
+
+  :param srcFrame: Input cubemap image.
+  :param outShape: Desired shape of output equirectangular image. cv::Size(Image_height,Image_width) format.
+  :param outFrae: Output image.
+
+.. code-block:: cpp
+
+	#include<iostream>
+	#include<opencv2/opencv.hpp>
+	#include"../omnicv/utils.hpp"
+	#include <opencv2/core/core.hpp>
+
+	// Creating the display window
+	int H = 500;
+	int W = 500;
+
+	std::string WINDOW_NAME{"viewer"};
+
+	int main()
+	{
+	  cv::namedWindow(WINDOW_NAME,CV_WINDOW_NORMAL);
+	  // cv::resizeWindow(WINDOW_NAME, 400, 400);
+
+	  cv::Mat frame;
+	  cv::Mat outFrame;
+
+	  frame = cv::imread("../data/cubemap_dice.jpg");
+	  cv::imshow(WINDOW_NAME,frame);
+	  cv::waitKey(0);
+
+	  fisheyeImgConv mapper1;
+	  mapper1.cubemap2equirect(frame,cv::Size (800,400),outFrame);
+	  cv::imshow(WINDOW_NAME,outFrame);
+	  cv::waitKey(0);
+	  
+
+	  return 0;
+	}
+
+
+Results
+-------
+
++----------------------------------------+----------------------------------------+
+| Equirectangular to horizontal cubmap   | Equirectangular to dice type cubemap   |
++========================================+========================================+
+| |Mode1|                                | |Mode2|                                |
++----------------------------------------+----------------------------------------+
+
+References
+==========
+
+**[1]** Virtual Reality introduction -  http://www.paul-reed.co.uk/programming.html
+
+**[2]** Cube mapping - https://en.wikipedia.org/wiki/Cube_mapping#cite_note-1
+
+**[3]** py360convert - https://github.com/sunset1995/py360convert
+
+`Back to examples index <Examples.html>`_
+-----------------------------------------

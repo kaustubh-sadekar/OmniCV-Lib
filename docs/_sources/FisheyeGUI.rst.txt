@@ -1,0 +1,68 @@
+.. include:: <isonum.txt>
+
+*************************************************************************************************************************************
+GUI to control focus, distortion and view orientation to generate different kinds of distortion effects and get images with different properties
+*************************************************************************************************************************************
+
+The software takes an equirectangular image/video frame and converts it into a new image based on the camera parameters, which can be controlled using the GUI. The python-based code was inspired by the official `github repository <https://github.com/alexvbogdan/DeepCalib/blob/master/dataset/continuous_dataset_generation.py>`_.[2] for `DeepCalib paper <https://www.researchgate.net/publication/329226174_DeepCalib_a_deep_learning_approach_for_automatic_intrinsic_calibration_of_wide_field-of-view_cameras>`_.[1] however, modifications were made in the code to improve real-time performance. The unified spherical model [3][4] is used to generate an output image.
+
+contributions
+-------------
+
+* Optimised NumPy operations to reduce computation time.
+* Remap function of OpenCV instead of interpolation to calculate the output image using the computed maps.
+* Storing the computed maps as object attributes and simply reusing them to avoid recomputing the maps. This shows a significant increase in the real-time performance of the software. 
+
+Average computation time for conversion for both methods has been tabulated for various output dimensions to explain the significant **improvement in real-time performance** of the code. Computation time for conversion by reusing the map stored as an object attribute is also given in the table.
+
++-------------------------+------------------------------------+----------------------+------------------------+
+| Output image resolution | code from deepcalib repository [2] | Improved code (ours) | Reusing the map (ours) |
++=========================+====================================+======================+========================+
+| 1200x1200               | 1.059 s                            | 0.523 s              | 0.149 s                |
++-------------------------+------------------------------------+----------------------+------------------------+
+| 800x800                 | 0.512 s                            | 0.276 s              | 0.097 s                |
++-------------------------+------------------------------------+----------------------+------------------------+
+| 500x500                 | 0.247 s                            | 0.133 s              | 0.067 s                |
++-------------------------+------------------------------------+----------------------+------------------------+
+| 250x250                 | 0.134 s                            | 0.073 s              | 0.058 s                |
++-------------------------+------------------------------------+----------------------+------------------------+
+
+The **equirect2Fisheye()** method of the library is used to develop the GUI. To learn how to use this method specifically refer to the `example </Examples/eqrect2fisheye.md>`_.
+
+Usage Instructions
+------------------
+
+To open a video or image using the GUI run the following command:
+
+.. code-block:: shell-session
+
+   python3 UCM_GUI.py <PATH TO THE FILE> <VIDEO_FLAG>
+
+* set <VIDEO_FLAG> = 1 if the file is a video file.
+* set <VIDEO_FLAG> = 0 if the file is an image file.
+
+Output
+------
+
+Sample output with various effects is shown in the follwing GIF
+
+.. figure:: eqrect2Fisheye2.*
+   :align: center
+
+
+References
+----------
+
+[1] Bogdan, Oleksandr & Eckstein, Viktor & Rameau, François & Bazin, Jean-Charles. (2018). 
+ DeepCalib: a deep learning approach for automatic intrinsic calibration of wide field-of-view cameras. 1-10. 10.1145/3278471.3278479. 
+
+[2] DeepCalib official repository -https://github.com/alexvbogdan/DeepCalib
+
+[3] João P. Barreto. 2006. A Unifying Geometric Representation for Central Projection
+Systems. CVIU Volume 103, Issue 3, September 2006, Pages 208-217.
+
+[4] C. Mei and P. Rives, "Single View Point Omnidirectional Camera Calibration from Planar Grids," Proceedings 2007 IEEE International Conference on Robotics and Automation, Roma, 2007, pp. 3945-3950.
+
+
+`Back to applications index <Applications.html>`_
+-----------------------------------------
