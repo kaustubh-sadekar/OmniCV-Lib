@@ -21,7 +21,7 @@ This library has been developed with the following obectives:
   * Python version
   * C++ version
   * ROS packge
-* Detailed documentation.
+* [Detailed documentation](https://kaustubh-sadekar.github.io/OmniCV-Lib/).
 
 ## Output Gallery
 
