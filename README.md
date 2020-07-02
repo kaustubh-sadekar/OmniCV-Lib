@@ -80,7 +80,6 @@ git clone https://github.com/kaustubh-sadekar/OmniCV.git
 cd OmniCV/
 sudo python3 setup.py install
 ```
-**Run any [python example](Examples/README.md) to check the code**
 
 ##### C++ version
 To install the C++ extensions follow the below steps.
