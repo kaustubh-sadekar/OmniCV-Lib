@@ -4,8 +4,7 @@ import numpy as np
 import math
 import time
 import sys
-sys.path.append("../")
-from fisheyeUtils import fisheyeImgConv
+from omnicv import fisheyeImgConv
 
 source_path = sys.argv[1]
 video = int(sys.argv[2])

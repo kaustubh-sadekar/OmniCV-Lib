@@ -3,8 +3,7 @@ import cv2
 import numpy as np
 import math
 import sys
-sys.path.append("../")
-from fisheyeUtils import fisheyeImgConv
+from omnicv import fisheyeImgConv
 
 # cap = cv2.VideoCapture("vid1.mp4")
 

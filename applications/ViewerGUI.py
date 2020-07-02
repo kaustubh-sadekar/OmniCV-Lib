@@ -4,8 +4,7 @@ import numpy as np
 import math
 import time
 import sys
-sys.path.append("../")
-from fisheyeUtils import fisheyeImgConv
+from omnicv import fisheyeImgConv
 
 def nothing(x):
     pass
