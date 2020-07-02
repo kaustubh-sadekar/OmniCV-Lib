@@ -9,11 +9,11 @@ find_package( OpenCV REQUIRED )
 
 # Sources files
 set(SOURCE_FILES
-  ../imgMap.cpp
+  ../omnicv/imgMap.cpp
 )
 
 set(HEADER_FILES
-  ../utils.hpp
+  ../omnicv/utils.hpp
 )
 
 
