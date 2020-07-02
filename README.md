@@ -114,4 +114,14 @@ roscd
 catkin_make
 ```
 
-#### NOTE : Images labeled under `labeled to reuse` have been used for the experiments.
+## Running the tests
+
+After installing the library, run the following commands to run the non visual and visual tests respectively.
+
+```shell
+cd OmniCV/tests/
+# Non visual tests
+bash test.sh 0
+# Visual tests
+bash test.sh 1
+```
