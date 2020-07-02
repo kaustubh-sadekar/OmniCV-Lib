@@ -99,11 +99,17 @@ cd ..
 ```
 ##### ROS Nodes
 To build the ROS nodes follow these steps:
-* Add the omnicv folder (present inside ros_files folder) to your ros workspace where you have your other ros packages.
+* Create a folder named omnicv in your ros workspace where you have your other ros packages
+
+```shell
+roscd src/
+mkdir omnicv
+```
+* Add the contents present inside ros_files folder to the omnicv folder created in the previous step.
 * Build the workspace.
 
 ```shell
-cp OmniCV/rosfiles/ [PATH TO ROS WORKSPACE]/src/
+cp OmniCV/rosfiles/ [PATH TO ROS WORKSPACE]/src/omnicv/
 roscd
 catkin_make
 ```
