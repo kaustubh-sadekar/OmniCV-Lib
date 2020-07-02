@@ -109,7 +109,7 @@ mkdir omnicv
 * Build the workspace.
 
 ```shell
-cp OmniCV/rosfiles/ [PATH TO ROS WORKSPACE]/src/omnicv/
+cp OmniCV/ros_files/ [PATH TO ROS WORKSPACE]/src/omnicv/
 roscd
 catkin_make
 ```
