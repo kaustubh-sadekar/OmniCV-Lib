@@ -3,7 +3,7 @@
 Different methods have been written for inter conversion between different mappings related to omni directional cameras.
 ## [Click here](https://kaustubh-sadekar.github.io/OmniCV-Lib/Examples.html) for a detailed API documentation and examples.
 
-## [1. Equirectangular image to fisheye or pinhole camera image.]
+## 1. Equirectangular image to fisheye or pinhole camera image
 #### Possibile areas of application
 * Generate images with different focal length and distortion coefficients.
 * Generate synthetic images for training of various deep learning models.
@@ -19,7 +19,7 @@ Some of the above mentioned applications have been discussed in detail in the ap
 </p>
 
 
-## [2. Fisheye image to equirectangular image.]
+## 2. Fisheye image to equirectangular image
 #### Possible areas of applications
 * Used for stitching and creating a 360&deg; video from two fisheye cameras facing away from eachother.
 * To upload omnidirectional camera videos to youtube which can support the 360&deg; viewer GUI.
@@ -33,7 +33,7 @@ Some of the above mentioned applications have been discussed in detail in the ap
 </p>
 
 
-## [3. Equirectangular image to cube map image (horizontal or dice format).]
+## 3. Equirectangular image to cube map image (horizontal or dice format)
 #### Possible areas of applications
 * Useful to create cubemap environment textures, for video games or VR application, from a given equirectangular image.
 * To remove distortions generated due to the fisheye lens.
@@ -47,7 +47,7 @@ Some of the above mentioned applications have been discussed in detail in the ap
 </p>
 
 
-## [4. Cubemap image to equirectangular image.]
+## 4. Cubemap image to equirectangular image
 #### Possible areas of applications
 * Create compressed equirectangular form of texture maps which can be later converted to cubemap and used as texture maps.
 * Intermediate step when using omnidirectional cameras.
@@ -60,7 +60,7 @@ Some of the above mentioned applications have been discussed in detail in the ap
 </p>
 
 
-## [5. Convert equirectangular image to perspective image with desired field of view and viewing angles.]
+## 5. Convert equirectangular image to perspective image with desired field of view and viewing angles
 #### Possible areas of applications 
 * Creating different perspective views in a 360&deg; video/image.
 * Object detection in 360&deg; videos with existing pre-trained models.
@@ -76,7 +76,7 @@ Some of the above mentioned applications have been discussed in detail in the ap
 
 
 
-## [6. Convert cubemap image to perspective image with desired field of view and viewing angles.](equirectangular2persp.md)
+## 6. Convert cubemap image to perspective image with desired field of view and viewing angles
 #### Possible areas of applications 
 * Create different perspective views in a 360&deg; video/image.
 * Creating a GUI to view 360&deg; videos and images.
