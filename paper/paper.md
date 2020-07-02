@@ -34,9 +34,10 @@ Detailed documentation is also provided, with stepwise instructions to install t
 
 # Acknowledgments 
 This work has made use of the following softwares : 
-numpy (@NumPy) , matplotlib (@Matplotlib), jupyter (@soton403913) and OpenCV (@opencv) 
-
+numpy (@NumPy) , matplotlib (@Matplotlib), jupyter (@soton403913) and OpenCV (@opencv).
 Images from the fisheye dataset(@FisheyeDataset) were used in the experiments related to fisheye images.
+
+This work is funded by a project under the National Center of Excellence in Technology and Internal Security (NCETIS), IIT Bombay sponsored by the Ministry of Electronics and Information Technology.
 
 # References
 
