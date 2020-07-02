@@ -68,6 +68,7 @@ Horizontal and vertical orientation viewing mode support
 ##### Python version
 The python version of the package is available on PyPi and can be installed using pip.
 ```shell
+pip3 install requirements.txt
 pip3 install omnicv
 ```
 
@@ -95,6 +96,16 @@ make
 cd ..
 # run the built code (here main_code.cpp)
 ./build/main_code
+```
+##### ROS Nodes
+To build the ROS nodes follow these steps:
+* Add the omnicv folder (present inside ros_files folder) to your ros workspace where you have your other ros packages.
+* Build the workspace.
+
+```shell
+cp OmniCV/rosfiles/ [PATH TO ROS WORKSPACE]/src/
+roscd
+catkin_make
 ```
 
 #### NOTE : Images labeled under `labeled to reuse` have been used for the experiments.
