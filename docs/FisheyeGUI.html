@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GUI to control focus, distortion and view orientation to generate different kinds of distortion effects and get images with different properties &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>GUI to control focus, distortion and view orientation to generate different kinds of distortion effects and get images with different properties</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/FisheyeGUI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gui-to-control-focus-distortion-and-view-orientation-to-generate-different-kinds-of-distortion-effects-and-get-images-with-different-properties">
+<h1>GUI to control focus, distortion and view orientation to generate different kinds of distortion effects and get images with different properties<a class="headerlink" href="#gui-to-control-focus-distortion-and-view-orientation-to-generate-different-kinds-of-distortion-effects-and-get-images-with-different-properties" title="Permalink to this headline">¶</a></h1>
+<p>The software takes an equirectangular image/video frame and converts it into a new image based on the camera parameters, which can be controlled using the GUI. The python-based code was inspired by the official <a class="reference external" href="https://github.com/alexvbogdan/DeepCalib/blob/master/dataset/continuous_dataset_generation.py">github repository</a>.[2] for <a class="reference external" href="https://www.researchgate.net/publication/329226174_DeepCalib_a_deep_learning_approach_for_automatic_intrinsic_calibration_of_wide_field-of-view_cameras">DeepCalib paper</a>.[1] however, modifications were made in the code to improve real-time performance. The unified spherical model [3][4] is used to generate an output image.</p>
+<div class="section" id="contributions">
+<h2>contributions<a class="headerlink" href="#contributions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Optimised NumPy operations to reduce computation time.</p></li>
+<li><p>Remap function of OpenCV instead of interpolation to calculate the output image using the computed maps.</p></li>
+<li><p>Storing the computed maps as object attributes and simply reusing them to avoid recomputing the maps. This shows a significant increase in the real-time performance of the software.</p></li>
+</ul>
+<p>Average computation time for conversion for both methods has been tabulated for various output dimensions to explain the significant <strong>improvement in real-time performance</strong> of the code. Computation time for conversion by reusing the map stored as an object attribute is also given in the table.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 34%" />
+<col style="width: 21%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Output image resolution</p></th>
+<th class="head"><p>code from deepcalib repository [2]</p></th>
+<th class="head"><p>Improved code (ours)</p></th>
+<th class="head"><p>Reusing the map (ours)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1200x1200</p></td>
+<td><p>1.059 s</p></td>
+<td><p>0.523 s</p></td>
+<td><p>0.149 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>800x800</p></td>
+<td><p>0.512 s</p></td>
+<td><p>0.276 s</p></td>
+<td><p>0.097 s</p></td>
+</tr>
+<tr class="row-even"><td><p>500x500</p></td>
+<td><p>0.247 s</p></td>
+<td><p>0.133 s</p></td>
+<td><p>0.067 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>250x250</p></td>
+<td><p>0.134 s</p></td>
+<td><p>0.073 s</p></td>
+<td><p>0.058 s</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>equirect2Fisheye()</strong> method of the library is used to develop the GUI. To learn how to use this method specifically refer to the <a class="reference external" href="/Examples/eqrect2fisheye.md">example</a>.</p>
+</div>
+<div class="section" id="usage-instructions">
+<h2>Usage Instructions<a class="headerlink" href="#usage-instructions" title="Permalink to this headline">¶</a></h2>
+<p>To open a video or image using the GUI run the following command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">python3 UCM_GUI.py &lt;PATH TO THE FILE&gt; &lt;VIDEO_FLAG&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>set &lt;VIDEO_FLAG&gt; = 1 if the file is a video file.</p></li>
+<li><p>set &lt;VIDEO_FLAG&gt; = 0 if the file is an image file.</p></li>
+</ul>
+</div>
+<div class="section" id="output">
+<h2>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h2>
+<p>Sample output with various effects is shown in the follwing GIF</p>
+<div class="figure align-center">
+<img alt="_images/eqrect2Fisheye2.gif" src="_images/eqrect2Fisheye2.gif" />
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>[1] Bogdan, Oleksandr &amp; Eckstein, Viktor &amp; Rameau, François &amp; Bazin, Jean-Charles. (2018).</dt><dd><p>DeepCalib: a deep learning approach for automatic intrinsic calibration of wide field-of-view cameras. 1-10. 10.1145/3278471.3278479.</p>
+</dd>
+</dl>
+<p>[2] DeepCalib official repository -<a class="reference external" href="https://github.com/alexvbogdan/DeepCalib">https://github.com/alexvbogdan/DeepCalib</a></p>
+<p>[3] João P. Barreto. 2006. A Unifying Geometric Representation for Central Projection
+Systems. CVIU Volume 103, Issue 3, September 2006, Pages 208-217.</p>
+<p>[4] C. Mei and P. Rives, “Single View Point Omnidirectional Camera Calibration from Planar Grids,” Proceedings 2007 IEEE International Conference on Robotics and Automation, Roma, 2007, pp. 3945-3950.</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Applications.html">Back to applications index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

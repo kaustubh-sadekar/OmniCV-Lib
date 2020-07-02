@@ -1,0 +1,482 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Interconversion between the equirectangular image to cubemap image &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ROS_Nodes.html">Documentation for ROS Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Interconversion between the equirectangular image to cubemap image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Equirectangular-to-cubemap.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="interconversion-between-the-equirectangular-image-to-cubemap-image">
+<h1>Interconversion between the equirectangular image to cubemap image<a class="headerlink" href="#interconversion-between-the-equirectangular-image-to-cubemap-image" title="Permalink to this headline">¶</a></h1>
+<p>An equirectangular image contains 180 ° vertical and 360 ° horizontal information of the world hence it can be represented as a spherical imaging plane, i.e. the information of the world is captured on a sphere.</p>
+<div class="section" id="what-is-a-cubemap">
+<h2>What is a cubemap ?<a class="headerlink" href="#what-is-a-cubemap" title="Permalink to this headline">¶</a></h2>
+<p>A cubemap is also a way to represent the 360 ° information of an environment. Just like an equirectangular image, a cubemap is also a form of representing 360 ° image. How do we get a cube map?</p>
+<p>As discussed before, a 360 ° image can be assumed to be projected on a sphere. Now imagine you create a cube, tightly enclosing the sphere and project the information that is on a sphere to the faces of the enclosing cube. All the six faces of such a cube are combined in a single image forming a cube map.</p>
+<p>Refer <a class="reference external" href="http://www.paul-reed.co.uk/programming.html">this link</a>. for better understanding of generating of cubemaps from an equirectangular image.</p>
+</div>
+<div class="section" id="advantages-of-cubemaps-2">
+<h2>Advantages of cubemaps[2]<a class="headerlink" href="#advantages-of-cubemaps-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Removes distortions inherent in sphere mapping.</p></li>
+<li><p>Efficient computation.</p></li>
+<li><p>Uses the entire resolution of the image.</p></li>
+<li><p>Easy to understand and generate.</p></li>
+</ul>
+<p>Due to the above advantages, cubemaps are widely used to generate the environment in video games.</p>
+</div>
+<div class="section" id="dice-and-horizontal-formats-of-cubemap">
+<h2>Dice and horizontal formats of cubemap<a class="headerlink" href="#dice-and-horizontal-formats-of-cubemap" title="Permalink to this headline">¶</a></h2>
+<p>Faces of the cube can be arranged in different ways to generate a cube map image. The two most common ways are dice format and horizontal format. In dice format, the faces are arranged as if the cube was cut open and spread on a flat surface. It has Top face in the first row, back, left, front and right face in the middle row and bottom face in the last row. In a horizontal format, all the images are concatenated horizontally in a single row. Thus cube map images in dice format have a ratio of 3:4 of height to width ratio and cube map images in horizontal format have a ratio of 1:6 of height to width. Examples of both formats are shown in the following figure for better understanding.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Equirectangular to horizontal cubmap</p></th>
+<th class="head"><p>Equirectangular to dice type cubemap</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><img alt="Mode1" src="_images/equirect2cubemap.gif" /></p></td>
+<td><p><img alt="Mode2" src="_images/equirect2cubemap_dice.gif" /></p></td>
+</tr>
+</tbody>
+</table>
+<p>Deriving the forward and inverse map for equirectangular to cubemap image is simply a combination of some interconversions between spherical coordinate system, cartesian coordinate system, and image coordinate system.[1]</p>
+<p>To know more about how this type of conversion can be useful in game developement refer <a class="reference external" href="https://medium.com/&#64;onix_systems/how-to-use-360-equirectangular-panoramas-for-greater-realism-in-games-55fadb0547da">this blog</a>.</p>
+<p><a class="reference external" href="/Examples/theory1.pdf">Click here</a>. for a simplified explaination of the math behind these conversions.</p>
+<p>Similar conversions are available on <a class="reference external" href="https://github.com/sunset1995/py360convert">this repository</a> [3]. Several changes have been made to improve the real-time performance of the library.</p>
+<p><strong>contributions</strong></p>
+<ul class="simple">
+<li><p><strong>Improved speed</strong> of existing python code by optimising the code. Speed comparison is enlisted in the table below.</p></li>
+</ul>
+<ul class="simple">
+<li><p><strong>C++ based functions</strong> for above implimentations.</p></li>
+<li><p><strong>ROS compatible node</strong> for above implimentations.</p></li>
+</ul>
+</div>
+<div class="section" id="python-example">
+<h2>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="converting-equirectangular-image-to-cubemap">
+<h3>Converting equirectangular image to cubemap<a class="headerlink" href="#converting-equirectangular-image-to-cubemap" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="fisheyeImgConv.equirect2cubemap">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">equirect2cubemap</code><span class="sig-paren">(</span><em class="sig-param">srcFrame</em>, <em class="sig-param">side=256</em>, <em class="sig-param">modif=False</em>, <em class="sig-param">dice=False</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.equirect2cubemap" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input equirectangular image</p></li>
+<li><p><strong>side</strong> – Width of face of the cube in pixels</p></li>
+<li><p><strong>modif</strong> – Flag to be set when the fisheye camera is placed parallel to the ground.</p></li>
+<li><p><strong>dice</strong> – Flag to be set when cubemap output is needed in dice form and not horiontal form.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">fromm</span> <span class="n">omnicv</span> <span class="kn">import</span> <span class="nn">fisheyeImgConv</span>
+
+<span class="c1"># Path to the equirectangular image</span>
+<span class="n">img_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># dice = 1 if output needed in dice form else output is returned in horiontal form</span>
+<span class="n">dice</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Reading an equirectangular image</span>
+<span class="n">equiRect</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+
+<span class="c1"># Creating a mapper object</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">()</span>
+
+<span class="c1"># Generating cubemap from equirectangular image</span>
+<span class="n">cubemap</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2cubemap</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">side</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span><span class="n">dice</span><span class="o">=</span><span class="n">dice</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">cubemap</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="/Examples/equirect2cubemap.py">click here</a> for a more detailed example for converting equirectangular image to cubemap image.</p>
+</div>
+<div class="section" id="converting-cubemap-to-equirectangluar-image">
+<h3>Converting cubemap to equirectangluar image<a class="headerlink" href="#converting-cubemap-to-equirectangluar-image" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv.cubemap2equirect(srcFrame,outShape):`</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input cubemap image</p></li>
+<li><p><strong>outShape</strong> – Desired shape of output equirectangular image. list [Image_height,Image_width]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">fromm</span> <span class="n">omnicv</span> <span class="kn">import</span> <span class="nn">fisheyeImgConv</span>
+
+<span class="c1"># Path to the cubemap image</span>
+<span class="n">Img_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Reading the cubemap image</span>
+<span class="n">cubemap</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">Img_path</span><span class="p">)</span>
+
+<span class="c1"># Shape of the output image [Height,Width]</span>
+<span class="n">outShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span><span class="mi">800</span><span class="p">]</span>
+
+<span class="c1"># Creating mapper object</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">()</span>
+
+<span class="c1"># Applying the map</span>
+<span class="n">equirect</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">cubemap2equirect</span><span class="p">(</span><span class="n">cubemap</span><span class="p">,</span><span class="n">outShape</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Image&quot;</span><span class="p">,</span><span class="n">equirect</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="/Examples/cubemap2equirect.py">click here</a>. for a more detailed example of converting a cubemap image to an equirectangular image.</p>
+</div>
+</div>
+<div class="section" id="c-example">
+<h2>C++ Example<a class="headerlink" href="#c-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Converting equirectangular image to cubemap<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::eqrect2cubemap(const cv::Mat &amp;srcFrame,cv::Mat &amp;dstFrame,</code></dt>
+<dt>
+<code class="sig-name descname">const int side=256, const bool modif=false, const bool dice = false);</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input equirectangular image.</p></li>
+<li><p><strong>side</strong> – Width of face of the cube in pixels.</p></li>
+<li><p><strong>modif</strong> – Flag to be set when the fisheye camera is placed parallel to the ground.</p></li>
+<li><p><strong>dice</strong> – Flag to be set when cubemap output is needed in dice form and not horiontal form.</p></li>
+<li><p><strong>dstFrame</strong> – Outpu image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect2.jpeg&quot;</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">eqrect2cubemap</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span><span class="mi">256</span><span class="p">,</span><span class="nb">true</span><span class="p">,</span><span class="nb">true</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">applyMap</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Converting cubemap to equirectangluar image<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::cubemap2equirect(const cv::Mat &amp;srcFrame1,</code></dt>
+<dt>
+<code class="sig-name descname">const cv::Size outShape, cv::Mat &amp;outFrame);</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input cubemap image.</p></li>
+<li><p><strong>outShape</strong> – Desired shape of output equirectangular image. cv::Size(Image_height,Image_width) format.</p></li>
+<li><p><strong>outFrae</strong> – Output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+  <span class="c1">// cv::resizeWindow(WINDOW_NAME, 400, 400);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/cubemap_dice.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">cubemap2equirect</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="mi">400</span><span class="p">),</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Equirectangular to horizontal cubmap</p></th>
+<th class="head"><p>Equirectangular to dice type cubemap</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><img alt="Mode1" src="_images/equirect2cubemap.gif" /></p></td>
+<td><p><img alt="Mode2" src="_images/equirect2cubemap_dice.gif" /></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<p><strong>[1]</strong> Virtual Reality introduction -  <a class="reference external" href="http://www.paul-reed.co.uk/programming.html">http://www.paul-reed.co.uk/programming.html</a></p>
+<p><strong>[2]</strong> Cube mapping - <a class="reference external" href="https://en.wikipedia.org/wiki/Cube_mapping#cite_note-1">https://en.wikipedia.org/wiki/Cube_mapping#cite_note-1</a></p>
+<p><strong>[3]</strong> py360convert - <a class="reference external" href="https://github.com/sunset1995/py360convert">https://github.com/sunset1995/py360convert</a></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="reference external" href="Examples.html">Back to examples index</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

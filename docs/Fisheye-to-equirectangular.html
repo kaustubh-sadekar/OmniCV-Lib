@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Converting fisheye image to equirectangular image &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ROS_Nodes.html">Documentation for ROS Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Converting fisheye image to equirectangular image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Fisheye-to-equirectangular.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converting-fisheye-image-to-equirectangular-image">
+<h1>Converting fisheye image to equirectangular image<a class="headerlink" href="#converting-fisheye-image-to-equirectangular-image" title="Permalink to this headline">¶</a></h1>
+<p>The python version of the code is inspired by <a class="reference external" href="https://github.com/BlueHorn07/py-fisheye-dewarp/blob/master/LICENSE">this repository</a>.[2]
+Significant changes have been made to improve the real-time performance of the code.</p>
+<p><strong>Contributions</strong></p>
+<ul class="simple">
+<li><p>Elimination of nested for a loop by implementing NumPy based vectorized calculations.</p></li>
+<li><p>Nested for loop calculations in the reference repository results in high computation time.</p></li>
+<li><p>Conversion map is saved as an object attribute so it can be reused for consecutive frames without any need to recompute the mapping in cases where the mapping parameters are not changing.</p></li>
+<li><p>Average computation time for conversion for both methods has been tabulated for various output dimensions to explain the significant <strong>improvement in real-time performance</strong> of the code. Computation time for conversion by reusing the map stored as an object attribute is also given in the table.</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 33%" />
+<col style="width: 26%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Output image resolution</p></th>
+<th class="head"><p>Nested for loop based calculations [2]</p></th>
+<th class="head"><p>Vectorized calculations (ours)</p></th>
+<th class="head"><p>Reusing the map (ours)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1600x3200</p></td>
+<td><p>52.46 s</p></td>
+<td><p>3.26 s</p></td>
+<td><p>0.19281 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>800x1600</p></td>
+<td><p>12.73 s</p></td>
+<td><p>0.76 s</p></td>
+<td><p>0.03779 s</p></td>
+</tr>
+<tr class="row-even"><td><p>400x800</p></td>
+<td><p>3.48 s</p></td>
+<td><p>0.197 s</p></td>
+<td><p>0.00457 s</p></td>
+</tr>
+<tr class="row-odd"><td><p>200x400</p></td>
+<td><p>0.83 s</p></td>
+<td><p>0.069 s</p></td>
+<td><p>0.00249 s</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><strong>Two different modes</strong> are provided for converting fisheye image to an equirectangular image. The second mode is especially useful in cases where the camera is placed parallel to the ground, facing the sky.</p></li>
+</ul>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode 1</p></th>
+<th class="head"><p>Mode 2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><img alt="Mode1" src="_images/fisheye2eqrect1.gif" /></p></td>
+<td><p><img alt="Mode2" src="_images/fisheye2equirect2.gif" /></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conversion flowchart</strong></p>
+<p>The following figure explains the inter-conversion between a fisheye image and an equirectangular image (<a class="reference external" href="http://paulbourke.net/dome/dualfish2sphere/">source</a>.)[1]</p>
+<div class="figure align-center" id="id2">
+<img alt="http://paulbourke.net/dome/dualfish2sphere/diagram_s.png" src="http://paulbourke.net/dome/dualfish2sphere/diagram_s.png" />
+<p class="caption"><span class="caption-text">Inter-conversion between a fisheye image and an equirectangular image[1]</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="python-example">
+<h2>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv.fisheye2equirect(srcFrame,outShape,aperture=0,delx=0,dely=0,radius=0,edit_mode=False)`</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input fisheye image</p></li>
+<li><p><strong>outShape</strong> – Desired shape of the output image in form of a tuple [Image_Height,Image_Width]</p></li>
+<li><p><strong>aperture</strong> – Aperture of the fisheye camera. Can be determined using the GUI provided.</p></li>
+<li><p><strong>delx</strong> – Shift in center x coordinate</p></li>
+<li><p><strong>dely</strong> – Shift in center y coordinate</p></li>
+<li><p><strong>radius</strong> – Radius of the circle containing the fisheye image</p></li>
+<li><p><strong>edit_mode</strong> – Boolean to allow editing the parameters. Useful in the GUI provided.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">omnicv</span> <span class="kn">import</span> <span class="n">fisheyeImgConv</span>
+
+<span class="n">Img_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Path to the file containing fisheye camera parameters (obtained using GUI)</span>
+<span class="n">param_file_path</span> <span class="o">=</span> <span class="s2">&quot;../fisheyeParams.txt&quot;</span>
+
+<span class="c1"># Reading the fisheye image</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">Img_path</span><span class="p">)</span>
+
+<span class="n">outShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span><span class="mi">800</span><span class="p">]</span>
+<span class="n">inShape</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># In case of fisheye lens placed vertically</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">(</span><span class="n">param_file_path</span><span class="p">)</span>
+<span class="n">frame2</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">fisheye2equirect</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outShape</span><span class="p">)</span>
+
+<span class="c1"># Use the below line if there are multiple images and the mapping is not changing in case of a video</span>
+<span class="n">frame2</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">applyMap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">frame</span><span class="p">)</span>
+
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;image&quot;</span><span class="p">,</span><span class="n">frame2</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="c-example">
+<h2>C++ Example<a class="headerlink" href="#c-example" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::fisheye2equirect(const cv::Mat &amp;srcFrame, cv::Mat &amp;dstFrame, cv::Size outShape,</code></dt>
+<dt>
+<code class="sig-name descname">int aperture, int delx, int dely, int radius, bool edit_mode)`</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>srcFrame</strong> – Input fisheye image</p></li>
+<li><p><strong>outShape</strong> – Desired shape of the output image in form of a tuple [Image_Height,Image_Width]</p></li>
+<li><p><strong>aperture</strong> – Aperture of the fisheye camera. Can be determined using the GUI provided.</p></li>
+<li><p><strong>delx</strong> – Shift in center x coordinate</p></li>
+<li><p><strong>dely</strong> – Shift in center y coordinate</p></li>
+<li><p><strong>radius</strong> – Radius of the circle containing the fisheye image</p></li>
+<li><p><strong>edit_mode</strong> – Boolean to allow editing the parameters. Useful in the GUI provided.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/fisheye_horizontal2.jpg&quot;</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">(</span><span class="s">&quot;../fisheyeParams.txt&quot;</span><span class="p">);</span>
+
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">fisheye2equirect</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">outFrame</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">800</span><span class="p">,</span><span class="mi">400</span><span class="p">));</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;output&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">applyMap</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;output 2&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id3">
+<img alt="_images/fisheye2eqrect1.gif" src="_images/fisheye2eqrect1.gif" />
+<p class="caption"><span class="caption-text">Example output for the code</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>For more examples of this method read <a class="reference external" href="/Examples/fisheye2equirect.py">this code</a>.</p>
+<p><span class="xref std std-doc">Click here to refer the documentation for the GUI to determine the fisheye parameters</span></p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<p>[1] Converting dual fisheye images into a spherical (equirectangular) projection - <a class="reference external" href="http://paulbourke.net/dome/dualfish2sphere/">http://paulbourke.net/dome/dualfish2sphere/</a></p>
+<p>[2] Github repository py-fisheye-dewarp - <a class="reference external" href="https://github.com/BlueHorn07/py-fisheye-dewarp">https://github.com/BlueHorn07/py-fisheye-dewarp</a></p>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Examples.html">Back to examples index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

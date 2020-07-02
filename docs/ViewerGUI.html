@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GUI to view an equirectangular image in 360 ° format with control trackbars for FOV and viewing angles &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>GUI to view an equirectangular image in 360 ° format with control trackbars for FOV and viewing angles</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ViewerGUI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gui-to-view-an-equirectangular-image-in-360-deg-format-with-control-trackbars-for-fov-and-viewing-angles">
+<h1>GUI to view an equirectangular image in 360 ° format with control trackbars for FOV and viewing angles<a class="headerlink" href="#gui-to-view-an-equirectangular-image-in-360-deg-format-with-control-trackbars-for-fov-and-viewing-angles" title="Permalink to this headline">¶</a></h1>
+<p><strong>You can download any 360 |deg| video from youtube and view it using the GUI and enjoy the 360 |deg| viewing experience</strong></p>
+<p>This application is a small GUI that can be used to change the FOV and viewing angles to view any 360 ° video. NOTE: This is just a basic example and not a full-fledged software. It does not process any audio.
+The main objective of creating this GUI was to show different outputs one can generate from an equirectangular image based on various parameters.</p>
+<p>Following methods of the library are used in this GUI:</p>
+<ul class="simple">
+<li><p>eqruirect2persp()</p></li>
+<li><p>fisheye2equirect()</p></li>
+<li><p>equirect2cubemap()</p></li>
+<li><p>cubemap2persp()</p></li>
+</ul>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>To run the gui use the following command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">python3 ViewerGUI.py &lt;INPUT_FILE_PATH&gt; &lt;VIDEO_FLAG&gt; &lt;MODE_FLAG&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>INPUT_FILE_PATH : Path for the input 360&amp;ged; video or image.</p></li>
+<li><p>VIDEO_FLAG : Set it = 1 if input file is a video else set it = 0</p></li>
+<li><p>MODE_FLAG : set it = 0 if input is an equirectangular image, = 1 if it is a fisheye image with camera placed perpendicular to the ground, = 2 if it is a fisheye image with camera placed parallel to the ground.</p></li>
+</ul>
+</div>
+<div class="section" id="outputs">
+<h2>outputs<a class="headerlink" href="#outputs" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/360Viewer.gif"><img alt="_images/360Viewer.gif" src="_images/360Viewer.gif" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">360 ° viewer mode 0</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/360Viewer2.gif"><img alt="_images/360Viewer2.gif" src="_images/360Viewer2.gif" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">360 ° viewer mode 1</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id4">
+<a class="reference internal image-reference" href="_images/360Viewer3.gif"><img alt="_images/360Viewer3.gif" src="_images/360Viewer3.gif" style="width: 600px;" /></a>
+<p class="caption"><span class="caption-text">360 ° viewer mode 2</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Applications.html">Back to applications index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

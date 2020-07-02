@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Converting equirectangular and cubemap image to perspective view image &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ROS_Nodes.html">Documentation for ROS Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Converting equirectangular and cubemap image to perspective view image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Equirectangular-to-perspective.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converting-equirectangular-and-cubemap-image-to-perspective-view-image">
+<h1>Converting equirectangular and cubemap image to perspective view image<a class="headerlink" href="#converting-equirectangular-and-cubemap-image-to-perspective-view-image" title="Permalink to this headline">¶</a></h1>
+<p>A perspective image is usually considered with a 90 ° field of view but the code supports other values of FOV in the horizontal
+and vertical direction. One of the most common applications of this type of conversion is to create a 360 ° image/video viewer, we can also
+use this method to generate multiple novel pinhole camera images from a single 360 ° image. This is also useful when generating a
+VR experience or game using skyboxes.</p>
+<p>A simplified version of the math behind such conversions is explained in the following figure, to know more mathematical details refer to [1].</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/PerspectiveImg.jpg"><img alt="_images/PerspectiveImg.jpg" src="_images/PerspectiveImg.jpg" style="width: 700px;" /></a>
+</div>
+<div class="section" id="python-example">
+<h2>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="example-code-for-equirectangular-to-perspective-conversion">
+<h3>Example code for equirectangular to perspective conversion<a class="headerlink" href="#example-code-for-equirectangular-to-perspective-conversion" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="fisheyeUtils.eqruirect2persp">
+<code class="sig-prename descclassname">fisheyeUtils.</code><code class="sig-name descname">eqruirect2persp</code><span class="sig-paren">(</span><em class="sig-param">img</em>, <em class="sig-param">FOV</em>, <em class="sig-param">Theta</em>, <em class="sig-param">Phi</em>, <em class="sig-param">Hd</em>, <em class="sig-param">Wd</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeUtils.eqruirect2persp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – input cubemap image</p></li>
+<li><p><strong>FOV</strong> – field of view (in horizontal direction)</p></li>
+<li><p><strong>Theta</strong> – Viewing angle wrt z axis</p></li>
+<li><p><strong>Phi</strong> – VIewing angle wrt y axis</p></li>
+<li><p><strong>Hd</strong> – Output image height</p></li>
+<li><p><strong>Wd</strong> – Output image width</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">omnicv</span> <span class="kn">import</span> <span class="n">fisheyeImgConv</span>
+
+
+<span class="c1"># path to the input equirectangular image</span>
+<span class="n">Img_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">equiRect</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">Img_path</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_NORMAL</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">equiRect</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">outShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">]</span>
+<span class="n">inShape</span> <span class="o">=</span> <span class="n">equiRect</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">()</span>
+
+<span class="n">FOV</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">Theta</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Phi</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Hd</span> <span class="o">=</span> <span class="n">outShape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Wd</span> <span class="o">=</span> <span class="n">outShape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">persp</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">eqruirect2persp</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">FOV</span><span class="p">,</span><span class="n">Theta</span><span class="p">,</span><span class="n">Phi</span><span class="p">,</span><span class="n">Hd</span><span class="p">,</span><span class="n">Wd</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">persp</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="example-code-for-cubemap-to-perspective-conversion">
+<h3>Example code for cubemap to perspective conversion<a class="headerlink" href="#example-code-for-cubemap-to-perspective-conversion" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="fisheyeImgConv.cubemap2persp">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">cubemap2persp</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">img</em>, <em class="sig-param">FOV</em>, <em class="sig-param">Theta</em>, <em class="sig-param">Phi</em>, <em class="sig-param">Hd</em>, <em class="sig-param">Wd</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.cubemap2persp" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>FOV</strong> – Field of view (in horizontal direction)</p></li>
+<li><p><strong>Theta</strong> – Viewing angle wrt z axis</p></li>
+<li><p><strong>Phi</strong> – Viewing angle wrt y axis</p></li>
+<li><p><strong>Hd</strong> – Output image height</p></li>
+<li><p><strong>Wd</strong> – Output image width</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">omnicv</span> <span class="kn">import</span> <span class="n">fisheyeImgConv</span>
+
+<span class="n">Img_path</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">equiRect</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">Img_path</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">namedWindow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">cv2</span><span class="o">.</span><span class="n">WINDOW_NORMAL</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">equiRect</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">outShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">]</span>
+<span class="n">inShape</span> <span class="o">=</span> <span class="n">equiRect</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">()</span>
+
+<span class="n">FOV</span> <span class="o">=</span> <span class="mi">90</span>
+<span class="n">Theta</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Phi</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Hd</span> <span class="o">=</span> <span class="n">outShape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Wd</span> <span class="o">=</span> <span class="n">outShape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">persp</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">cubemap2persp</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">FOV</span><span class="p">,</span><span class="n">Theta</span><span class="p">,</span><span class="n">Phi</span><span class="p">,</span><span class="n">Hd</span><span class="p">,</span><span class="n">Wd</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;cubemap&quot;</span><span class="p">,</span><span class="n">persp</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-example">
+<h2>C++ Example<a class="headerlink" href="#c-example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3>Example code for equirectangular to perspective conversion<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::equirect2persp(const cv::Mat &amp;img, cv::Mat &amp;dstFrame,float FOV,</code></dt>
+<dt>
+<code class="sig-name descname">float THETA, float PHI, int Hd, int Wd);</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – input cubemap image</p></li>
+<li><p><strong>FOV</strong> – field of view (in horizontal direction)</p></li>
+<li><p><strong>THETA</strong> – Viewing angle wrt z axis</p></li>
+<li><p><strong>PHI</strong> – VIewing angle wrt y axis</p></li>
+<li><p><strong>Hd</strong> – Output image height</p></li>
+<li><p><strong>Wd</strong> – Output image width</p></li>
+<li><p><strong>dstFrame</strong> – Output images</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect_temp1.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">equirect2persp</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">);</span>
+
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Example code for cubemap to perspective conversion<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::cubemap2persp(const cv::Mat &amp;img1, cv::Mat &amp;dstFrame,float FOV,</code></dt>
+<dt>
+<code class="sig-name descname">float THETA, float PHI, int Hd, int Wd);</code></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>FOV</strong> – Field of view (in horizontal direction)</p></li>
+<li><p><strong>Theta</strong> – Viewing angle wrt z axis</p></li>
+<li><p><strong>Phi</strong> – Viewing angle wrt y axis</p></li>
+<li><p><strong>Hd</strong> – Output image height</p></li>
+<li><p><strong>Wd</strong> – Output image width</p></li>
+<li><p><strong>dstFrame</strong> – Output image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+  <span class="c1">// cv::resizeWindow(WINDOW_NAME, 400, 400);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/cubemap_dice.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">cubemap2persp</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span><span class="mi">400</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For a more detailed example refer to the following <a class="reference external" href="/Examples/equirect2persp.py">code</a>. for equirectangular to cubemap projection and refer <a class="reference external" href="/Examples/cubemap2persp.py">this code</a>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Equirectangular to perspective image</p></th>
+<th class="head"><p>Cubemap to perspective image</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><img alt="Mode1" src="_images/eqrect2persp.gif" /></p></td>
+<td><p><img alt="Mode2" src="_images/cubemap2persp_dice.gif" /></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<p><strong>[1]</strong> Araújo, António. (2018). Drawing Equirectangular VR Panoramas with Ruler, Compass, and Protractor. Journal of Science and Technology of the Arts. 10. 10.7559/citarj.v10i1.471.</p>
+<div class="section" id="id3">
+<h3><a class="reference external" href="Examples.html">Back to examples index</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

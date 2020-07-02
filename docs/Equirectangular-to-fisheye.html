@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Converting equirectangular image to fisheye image &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ROS_Nodes.html">Documentation for ROS Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Converting equirectangular image to fisheye image</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Equirectangular-to-fisheye.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="converting-equirectangular-image-to-fisheye-image">
+<h1>Converting equirectangular image to fisheye image<a class="headerlink" href="#converting-equirectangular-image-to-fisheye-image" title="Permalink to this headline">¶</a></h1>
+<p><strong>What is an equirectangular image?</strong></p>
+<p>Converting equirectangular image to fisheye image It is a method of representing the curved spherical 3D world on a 2D plane in the form of longitudes and latitudes.
+An equirectangular image is always in a 2:1 ratio. Equirectangular images are relatively easy to visualize and are also in the form of a rectangular image. It is not only used to create 2D world maps but also to represent imagery from a full sphere rather than just a small window onto the world.[1]</p>
+<div class="figure align-center" id="id2">
+<img alt="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg/800px-Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg/800px-Rheingauer_Dom%2C_Geisenheim%2C_360_Panorama_%28Equirectangular_projection%29.jpg" />
+<p class="caption"><span class="caption-text">An example of an equirectangular image</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="converting-an-equirectangular-image-to-fisheye-image">
+<h2>Converting an equirectangular image to fisheye image<a class="headerlink" href="#converting-an-equirectangular-image-to-fisheye-image" title="Permalink to this headline">¶</a></h2>
+<p>For converting an equirectangular image to a fisheye image, the equirectangular image is considered to be projected on a unit sphere using the equivalent longitude and latitude coordinates of the equirectangular image and then this information is later projected on an imaging plane based on a camera model. There are several camera models proposed in the literature. OmniCV library provides implementations for several types of camera models which include the <strong>Unified Camera Model (UCM)</strong> [5], <strong>Extended Unified Camera Model (EUCM)</strong> [6], <strong>Field Of View (FOV)</strong> Camera model [7] and <strong>Double Sphere</strong> Camera Model [3].</p>
+<p>The code for Unified Camera Model is inspired from, DeepCalib[2] and its <a class="reference external" href="https://github.com/alexvbogdan/DeepCalib">github repository</a>. The repository provides python which can be further modified and used for desired purpose.</p>
+<div class="section" id="python-example">
+<h3>Python Example<a class="headerlink" href="#python-example" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="fisheyeImgConv.equirect2Fisheye_UCM">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">equirect2Fisheye_UCM</code><span class="sig-paren">(</span><em class="sig-param">img,outShape,f=50,xi=1.2,angles=[0,0,0]</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.equirect2Fisheye_UCM" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the unified camera model (UCM).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels</p></li>
+<li><p><strong>f</strong> – Focal lenght</p></li>
+<li><p><strong>xi</strong> – Distortion coefficient</p></li>
+<li><p><strong>angles</strong> – List of camera [roll,pitch,yaw]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fisheyeImgConv.equirect2Fisheye_EUCM">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">equirect2Fisheye_EUCM</code><span class="sig-paren">(</span><em class="sig-param">img,outShape,f=50,a_=0.5,b_=0.5,angles=[0,0,0]</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.equirect2Fisheye_EUCM" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the extended unified camera model (EUCM).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels</p></li>
+<li><p><strong>f</strong> – Focal lenght</p></li>
+<li><p><strong>a</strong> – Distortion coefficient</p></li>
+<li><p><strong>b</strong> – Distortion coefficient</p></li>
+<li><p><strong>angles</strong> – List of camera [roll,pitch,yaw]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fisheyeImgConv.equirect2Fisheye_FOV">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">equirect2Fisheye_FOV</code><span class="sig-paren">(</span><em class="sig-param">img,outShape,f=50,w_=0.5,angles=[0,0,0]</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.equirect2Fisheye_FOV" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the Field of View (FOV) camera model.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels</p></li>
+<li><p><strong>f</strong> – Focal lenght</p></li>
+<li><p><strong>w</strong> – Distortion coefficient</p></li>
+<li><p><strong>angles</strong> – List of camera [roll,pitch,yaw]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="fisheyeImgConv.equirect2Fisheye_DS">
+<code class="sig-prename descclassname">fisheyeImgConv.</code><code class="sig-name descname">equirect2Fisheye_DS</code><span class="sig-paren">(</span><em class="sig-param">img,outShape,f=50,a_=0.5,xi_=0.5,angles=[0,0,0]</em><span class="sig-paren">)</span><a class="headerlink" href="#fisheyeImgConv.equirect2Fisheye_DS" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the Double Sphere (DS) camera model.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels</p></li>
+<li><p><strong>f</strong> – Focal lenght</p></li>
+<li><p><strong>a</strong> – Distortion coefficient</p></li>
+<li><p><strong>xi</strong> – Distortion coefficient</p></li>
+<li><p><strong>angles</strong> – List of camera [roll,pitch,yaw]</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Numpy array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Example code</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env/python</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">omnicv</span> <span class="kn">import</span> <span class="n">fisheyeImgConv</span>
+
+<span class="c1"># Import equirectangular image</span>
+<span class="n">equiRect</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">IMAGE_PATH</span><span class="p">)</span>
+
+<span class="c1"># Defining output shape</span>
+<span class="n">outShape</span> <span class="o">=</span> <span class="p">[</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">]</span>
+
+<span class="c1"># Creating mapper object</span>
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">fisheyeImgConv</span><span class="p">()</span>
+
+<span class="c1"># Converting equirectangular to fisheye using Unified Camera model (UCM)</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye_UCM</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="n">outShape</span><span class="p">,</span><span class="n">xi</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;UCM Model Output&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Converting equirectangular to fisheye using Extended UCM model</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye_EUCM</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">],</span><span class="n">f</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">a_</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">b_</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;EUCM Model Output&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Converting equirectangular to fisheye using Field Of Vide (FOV) model</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye_FOV</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">],</span><span class="n">f</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span><span class="n">w_</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;FOV model Output&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Converting equirectangular to fisheye using Double Sphere (DS) model</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye_DS</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="p">[</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">],</span><span class="n">f</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span><span class="n">a_</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span><span class="n">xi_</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;DS Model Output&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Changing the distortion coefficient for (UCM)</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="n">outShape</span><span class="p">,</span><span class="n">xi</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;fisheye&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Rotate the sphere</span>
+<span class="n">fisheye</span> <span class="o">=</span> <span class="n">mapper</span><span class="o">.</span><span class="n">equirect2Fisheye</span><span class="p">(</span><span class="n">equiRect</span><span class="p">,</span><span class="n">outShape</span><span class="o">=</span><span class="n">outShape</span><span class="p">,</span><span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="mi">90</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;fisheye&quot;</span><span class="p">,</span><span class="n">fisheye</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-example">
+<h2>C++ Example<a class="headerlink" href="#c-example" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::equirect2Fisheye_UCM(const cv::Mat &amp;img, cv::Mat &amp;dstFrame, cv::Size outShape,</code></dt>
+<dt>
+<code class="sig-name descname">float f=50, float xi=1.2,float alpha=0, float beta=0, float gamma=0);</code></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the unified camera model (UCM).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image.</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels.</p></li>
+<li><p><strong>f</strong> – Focal lenght.</p></li>
+<li><p><strong>xi</strong> – Distortion coefficient.</p></li>
+<li><p><strong>alpha</strong> – Rotation of camera about X axis.</p></li>
+<li><p><strong>beta</strong> – Rotation of camera about Y axis.</p></li>
+<li><p><strong>gamma</strong> – Rotation of camera about Z axis.</p></li>
+<li><p><strong>dstFrame</strong> – Output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::equirect2Fisheye_EUCM(const cv::Mat &amp;img, cv::Mat &amp;dstFrame, cv::Size outShape, float f=50,</code></dt>
+<dt>
+<code class="sig-name descname">float a_ = 0.5, float b_=0.5, float alpha=0, float beta=0, float gamma=0);</code></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the extended unified camera model (EUCM).</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image.</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels.</p></li>
+<li><p><strong>f</strong> – Focal lenght.</p></li>
+<li><p><strong>a</strong> – Distortion coefficient.</p></li>
+<li><p><strong>b</strong> – Distortion coefficient.</p></li>
+<li><p><strong>alpha</strong> – Rotation of camera about X axis.</p></li>
+<li><p><strong>beta</strong> – Rotation of camera about Y axis.</p></li>
+<li><p><strong>gamma</strong> – Rotation of camera about Z axis.</p></li>
+<li><p><strong>dstFrame</strong> – Output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::equirect2Fisheye_FOV(const cv::Mat &amp;img, cv::Mat &amp;dstFrame, cv::Size outShape, float f=50,</code></dt>
+<dt>
+<code class="sig-name descname">float w_=0.5, float alpha=0, float beta=0, float gamma=0);</code></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the Field of View (FOV) camera model.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image.</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels.</p></li>
+<li><p><strong>f</strong> – Focal lenght.</p></li>
+<li><p><strong>w</strong> – Distortion coefficient.</p></li>
+<li><p><strong>alpha</strong> – Rotation of camera about X axis.</p></li>
+<li><p><strong>beta</strong> – Rotation of camera about Y axis.</p></li>
+<li><p><strong>gamma</strong> – Rotation of camera about Z axis.</p></li>
+<li><p><strong>dstFrame</strong> – Output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="sig-name descname">fisheyeImgConv::equirect2Fisheye_DS(const cv::Mat &amp;img, cv::Mat &amp;dstFrame, cv::Size outShape, float f=50,</code></dt>
+<dt>
+<code class="sig-name descname">float a_ = 0.5, float xi_=0.5, float alpha=0, float beta=0, float gamma=0);</code></dt>
+<dd><blockquote>
+<div><p>Function to convert equirectangular image to fisheye image using the Double Sphere (DS) camera model.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> – Input equirectangular image.</p></li>
+<li><p><strong>outShape</strong> – list of [Image_Height,Image_Width] in pixels.</p></li>
+<li><p><strong>f</strong> – Focal lenght.</p></li>
+<li><p><strong>a</strong> – Distortion coefficient.</p></li>
+<li><p><strong>xi</strong> – Distortion coefficient.</p></li>
+<li><p><strong>alpha</strong> – Rotation of camera about X axis.</p></li>
+<li><p><strong>beta</strong> – Rotation of camera about Y axis.</p></li>
+<li><p><strong>gamma</strong> – Rotation of camera about Z axis.</p></li>
+<li><p><strong>dstFrame</strong> – Output image.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p><strong>Example code</strong></p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&lt;opencv2/opencv.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="cpf">&quot;../omnicv/utils.hpp&quot;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;opencv2/core/core.hpp&gt;</span><span class="cp"></span>
+
+<span class="c1">// Creating the display window</span>
+<span class="kt">int</span> <span class="n">H</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">W</span> <span class="o">=</span> <span class="mi">500</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">WINDOW_NAME</span><span class="p">{</span><span class="s">&quot;viewer&quot;</span><span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">namedWindow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">CV_WINDOW_NORMAL</span><span class="p">);</span>
+  <span class="c1">// cv::resizeWindow(WINDOW_NAME, 400, 400);</span>
+
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">frame</span><span class="p">;</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">Mat</span> <span class="n">outFrame</span><span class="p">;</span>
+
+  <span class="c1">// ##### 1. Example for equirectangular to fisheye image conversion using Unified camera model ##########</span>
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect_temp1.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">equirect2Fisheye_UCM</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">),</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.9</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Unified Camera Model model output&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+
+  <span class="c1">// ##### 2. Example for equirectangular to fisheye image conversion using Extended Unified camera model ##########</span>
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect_temp1.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">equirect2Fisheye_EUCM</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">),</span><span class="mi">100</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Extended Unified Camera Model model output&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+
+  <span class="c1">// ##### 3. Example for equirectangular to fisheye image conversion using Field of View camera model ##########</span>
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect_temp1.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">equirect2Fisheye_FOV</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">),</span><span class="mi">50</span><span class="p">,</span><span class="mf">1.2</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Field of View model output&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+
+  <span class="c1">// ##### 4. Example for equirectangular to fisheye image conversion using Double Sphere camera model ##########</span>
+  <span class="n">frame</span> <span class="o">=</span> <span class="n">cv</span><span class="o">::</span><span class="n">imread</span><span class="p">(</span><span class="s">&quot;../data/equirect_temp1.jpg&quot;</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="n">WINDOW_NAME</span><span class="p">,</span><span class="n">frame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="n">fisheyeImgConv</span> <span class="n">mapper1</span><span class="p">;</span>
+  <span class="n">mapper1</span><span class="p">.</span><span class="n">equirect2Fisheye_DS</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span><span class="n">outFrame</span><span class="p">,</span> <span class="n">cv</span><span class="o">::</span><span class="n">Size</span> <span class="p">(</span><span class="mi">250</span><span class="p">,</span><span class="mi">250</span><span class="p">),</span><span class="mi">50</span><span class="p">,</span><span class="mf">0.4</span><span class="p">,</span><span class="mf">0.8</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">imshow</span><span class="p">(</span><span class="s">&quot;Double Sphere model output&quot;</span><span class="p">,</span><span class="n">outFrame</span><span class="p">);</span>
+  <span class="n">cv</span><span class="o">::</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id3">
+<img alt="_images/eqrect2fisheye.gif" src="_images/eqrect2fisheye.gif" />
+<p class="caption"><span class="caption-text">Converting equirectangular image to fisheye image using UCM model</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+<p>refer to the <a class="reference external" href="https://github.com/kaustubh-sadekar/OmniCV/blob/master/Examples/equirect2fisheye.py">example code</a>. to know the other ways of using this conversion</p>
+<div class="section" id="reference">
+<h3>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h3>
+<p><strong>[1]</strong> Google AR VR blog - <a class="reference external" href="https://blog.google/products/google-vr/bringing-pixels-front-and-center-vr-video/">https://blog.google/products/google-vr/bringing-pixels-front-and-center-vr-video/</a></p>
+<p><strong>[2]</strong> Bogdan, Oleksandr &amp; Eckstein, Viktor &amp; Rameau, François &amp; Bazin, Jean-Charles. (2018). DeepCalib: a deep learning approach for automatic intrinsic calibration of wide field-of-view cameras. 1-10. 10.1145/3278471.3278479.</p>
+<p><strong>[3]</strong> Usenko, Vladyslav &amp; Demmel, Nikolaus &amp; Cremers, Daniel. (2018). The Double Sphere Camera Model.</p>
+<p><strong>[4]</strong> Kannala, Juho &amp; Brandt, Sami. (2006). A Generic Camera Model and Calibration Method for Conventional, Wide-Angle, and Fish-Eye Lenses. IEEE transactions on pattern analysis and machine intelligence. 28. 1335-40. 10.1109/TPAMI.2006.153.</p>
+<p><strong>[5]</strong> C. Geyer and K. Daniilidis. A unifying theory for central panoramic systems and practical implications. In D.Vernon, editor,    Computer Vision — ECCV 2000, pages 445–461, Berlin, Heidelberg, 2000. Springer Berlin Heidelberg.</p>
+<p><strong>[6]</strong> B. Khomutenko, G. Garcia, and P. Martinet. An enhanced unified camera model. IEEE Robotics and Automation Letters, 1(1):137–144, Jan 2016.</p>
+<p><strong>[7]</strong> F. Devernay and O. Faugeras. Straight lines have to be straight. Machine vision and applications, 13(1):14–24, 2001.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Examples.html">Back to examples index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

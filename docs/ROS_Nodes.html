@@ -1,0 +1,432 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentation for ROS Nodes &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Some application notes or use cases of the library" href="Applications.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html#introduction">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#objectives-of-the-omnicv-library">Objectives of the OmniCV library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#output-gallery">Output Gallery</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#index-to-theory-examples-application-notes-and-ros-nodes">Index to theory examples , application notes and ROS nodes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Documentation for ROS Nodes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-ros-nodes">OmniCV ROS Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#build-the-ros-nodes">Build The ROS Nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-equirect2fisheye-node">omnicv_equirect2fisheye node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-equirect2persp-node">omnicv_equirect2persp node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-equirect2cubemap-node">omnicv_equirect2cubemap node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-cubemap2persp-node">omnicv_cubemap2persp node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-cubemap2equirect-node">omnicv_cubemap2equirect node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#omnicv-fisheye2equirect-node">omnicv_fisheye2equirect node</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Back to examples index</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation for ROS Nodes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-ros-nodes">OmniCV ROS Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-the-ros-nodes">Build The ROS Nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-equirect2fisheye-node">omnicv_equirect2fisheye node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-equirect2persp-node">omnicv_equirect2persp node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-equirect2cubemap-node">omnicv_equirect2cubemap node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-cubemap2persp-node">omnicv_cubemap2persp node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-cubemap2equirect-node">omnicv_cubemap2equirect node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#omnicv-fisheye2equirect-node">omnicv_fisheye2equirect node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">Back to examples index</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Documentation for ROS Nodes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ROS_Nodes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentation-for-ros-nodes">
+<h1>Documentation for ROS Nodes<a class="headerlink" href="#documentation-for-ros-nodes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="omnicv-ros-nodes">
+<h2>OmniCV ROS Nodes<a class="headerlink" href="#omnicv-ros-nodes" title="Permalink to this headline">¶</a></h2>
+<p>ROS is a common platform used by industry and academia for research and deployment of various robotics and vision applications. Running different ROS nodes in parallel helps in improving real-time performance. ROS also makes it easy to integrate different smaller modules into a complex project making it easy to debug and maintain. In several robotics applications it is observed that using 360 ° cameras are advantageous over using narrow field of view ( 90 ° or less ) cameras. OmniCV ROS Nodes provide an efficient and easy to use the setup for all the different kinds of interconversions related to 360|deg| images. This makes it easy for researchers and developers to perform these interconversions by integrating the OmniCV ROS nodes into their existing ROS based projects.</p>
+</div>
+<div class="section" id="build-the-ros-nodes">
+<h2>Build The ROS Nodes<a class="headerlink" href="#build-the-ros-nodes" title="Permalink to this headline">¶</a></h2>
+<p>To build the OmniCV ROS nodes follow these steps.</p>
+<ul class="simple">
+<li><p>Create a folder named omnicv in your ros workspace where you have your other ros packages.</p></li>
+</ul>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">roscd src/</span>
+<span class="go">mkdir omnicv</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Add the contents present inside ros_files folder to the omnicv folder created in the previous step.</p></li>
+<li><p>Build the workspace.</p></li>
+</ul>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">cp OmniCV/ros_files/ [PATH TO ROS WORKSPACE]/src/omnicv/</span>
+<span class="go">roscd</span>
+<span class="go">catkin_make</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="omnicv-equirect2fisheye-node">
+<h2>omnicv_equirect2fisheye node<a class="headerlink" href="#omnicv-equirect2fisheye-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to convert equirectangular image to fisheye image</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv equirect2fisheye <span class="o">[</span>mode<span class="o">]</span> <span class="o">[</span>outH<span class="o">]</span> <span class="o">[</span>outW<span class="o">]</span>
+</pre></div>
+</div>
+<p>mode (required argument): Camera model to be used for convertion of equirectangular to fisheye image.</p>
+<ul class="simple">
+<li><p>mode = 0 - Use Unified Camera Model</p></li>
+<li><p>mode = 1 - Use Extended Unified Camera Model</p></li>
+<li><p>mode = 2 - Use Field of View camera model</p></li>
+<li><p>mode = 3 - Use Doubel Sphere camera model</p></li>
+</ul>
+<p>outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)</p>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/equirect : Equirectangular image data to be used as input.</p></li>
+<li><p>/omnicv/equirect2fisheye/alpha : Rotation about x-axis.</p></li>
+<li><p>/omnicv/equirect2fisheye/beta : Rotation about y-axis.</p></li>
+<li><p>/omnicv/equirect2fisheye/gamma : Rotation about z-axis.</p></li>
+<li><p>/omnicv/equirect2fisheye/f : Focal length.</p></li>
+<li><p>/omnicv/equirect2fisheye/xi : Distortion parameter for UCM model.</p></li>
+<li><p>/omnicv/equirect2fisheye/<a href="#id8"><span class="problematic" id="id9">a_</span></a> : Distortion parameter for EUCM model.</p></li>
+<li><p>/omnicv/equirect2fisheye/<a href="#id10"><span class="problematic" id="id11">b_</span></a> : Distortion parameter for EUCM model.</p></li>
+<li><p>/omnicv/equirect2fisheye/<a href="#id12"><span class="problematic" id="id13">w_</span></a> : Distortion parameter for FOV model.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/fisheye : Generated fisheye image</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the topics other than /omnicv/equirect have corresponding message type of std_msgs/Float32.</p>
+</div>
+<div class="figure align-center" id="id2">
+<img alt="_images/e2f.jpg" src="_images/e2f.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="omnicv-equirect2persp-node">
+<h2>omnicv_equirect2persp node<a class="headerlink" href="#omnicv-equirect2persp-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to conver Equirectangular image to Perspective image</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv equirect2persp <span class="o">[</span>outH<span class="o">]</span> <span class="o">[</span>outW<span class="o">]</span>
+</pre></div>
+</div>
+<p>outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)</p>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/equirect : Equirectangular image data to be used as input.</p></li>
+<li><p>/omnicv/equirect2persp/alpha : Rotation about x-axis.</p></li>
+<li><p>/omnicv/equirect2persp/beta : Rotation about y-axis.</p></li>
+<li><p>/omnicv/equirect2persp/gamma : Rotation about z-axis.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/persp : Generated perspective image</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the topics other than /omnicv/equirect have corresponding message type of std_msgs/Float32.</p>
+</div>
+<div class="figure align-center" id="id3">
+<img alt="_images/eq2p.jpg" src="_images/eq2p.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="omnicv-equirect2cubemap-node">
+<h2>omnicv_equirect2cubemap node<a class="headerlink" href="#omnicv-equirect2cubemap-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to convert equirectangular image to cubemap</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv equirect2cubemap <span class="o">[</span>cube_side<span class="o">]</span> <span class="o">[</span>modif_flag<span class="o">]</span> <span class="o">[</span>dice<span class="o">]</span>
+</pre></div>
+</div>
+<p>cube_side (optional argument) : Cubemap side length (Integer value)
+modif_flag (optional argument) : Flag to modify the output mode (bool value)</p>
+<ul class="simple">
+<li><p>modif_flag = 0 - For camera position perpendicular to ground.</p></li>
+<li><p>modif_flag = 1 = For camera position parallel to ground.</p></li>
+</ul>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/equirect : Equirectangular image data to be used as input.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/cubemap : Generated cubemap image</p></li>
+</ul>
+<div class="figure align-center" id="id4">
+<img alt="_images/e2c.jpg" src="_images/e2c.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="omnicv-cubemap2persp-node">
+<h2>omnicv_cubemap2persp node<a class="headerlink" href="#omnicv-cubemap2persp-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to conver Cubemap image to Perspective image</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv cubemap2persp <span class="o">[</span>outH<span class="o">]</span> <span class="o">[</span>outW<span class="o">]</span>
+</pre></div>
+</div>
+<p>outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)</p>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/cubemap : Equirectangular image data to be used as input.</p></li>
+<li><p>/omnicv/cubemap2persp/alpha : Rotation about x-axis.</p></li>
+<li><p>/omnicv/cubemap2persp/beta : Rotation about y-axis.</p></li>
+<li><p>/omnicv/cubemap2persp/gamma : Rotation about z-axis.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/persp : Generated perspective image</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the topics other than /omnicv/cubemap have corresponding message type of std_msgs/Float32.</p>
+</div>
+<div class="figure align-center" id="id5">
+<img alt="_images/c2p.jpg" src="_images/c2p.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="omnicv-cubemap2equirect-node">
+<h2>omnicv_cubemap2equirect node<a class="headerlink" href="#omnicv-cubemap2equirect-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to convert equirectangular image to cubemap.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv cubemap2equirect <span class="o">[</span>outH<span class="o">]</span> <span class="o">[</span>outW<span class="o">]</span>
+</pre></div>
+</div>
+<p>outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)</p>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/cubemap : Cubemap image data to be used as input.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/equirect : Generated Equirectangular image</p></li>
+</ul>
+<div class="figure align-center" id="id6">
+<img alt="_images/c2eq.jpg" src="_images/c2eq.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="omnicv-fisheye2equirect-node">
+<h2>omnicv_fisheye2equirect node<a class="headerlink" href="#omnicv-fisheye2equirect-node" title="Permalink to this headline">¶</a></h2>
+<p>ROS node to convert fisheye image to equirectangular image.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span>rosrun omnicv fisheye2equirect <span class="o">[</span>outH<span class="o">]</span> <span class="o">[</span>outW<span class="o">]</span>
+</pre></div>
+</div>
+<p>outH (optional argument) : Output image height. (Integer value)
+outW (optional argument) : Output image width. (Integer value)</p>
+<p><strong>Topics that the node subscribes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/fisheye : Fisheye image data to be used as input.</p></li>
+</ul>
+<p><strong>Topics that the node publishes to</strong></p>
+<ul class="simple">
+<li><p>/omnicv/equirect : Generated Equirectangular image</p></li>
+</ul>
+<div class="figure align-center" id="id7">
+<img alt="_images/f2e.jpg" src="_images/f2e.jpg" />
+<p class="caption"><span class="caption-text">Graph showing the above explained topics and nodes. The nodes are represented by bubbles and topics by rectangles.</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Examples.html">Back to examples index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Applications.html" class="btn btn-neutral float-left" title="Some application notes or use cases of the library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

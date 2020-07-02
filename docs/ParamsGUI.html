@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GUI to determine fisheye camera parameters like aperture and fisheye radius for further conversions. &mdash; OmniCV 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> OmniCV
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to OmniCV Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#installation-guide">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html#running-the-tests">Running The Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Omnidirectional-Cameras.html">Omni directional cameras</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Examples.html">Example for users to understand how to use the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Applications.html">Some application notes or use cases of the library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ROS_Nodes.html">Documentation for ROS Nodes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OmniCV</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>GUI to determine fisheye camera parameters like aperture and fisheye radius for further conversions.</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ParamsGUI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="gui-to-determine-fisheye-camera-parameters-like-aperture-and-fisheye-radius-for-further-conversions">
+<h1>GUI to determine fisheye camera parameters like aperture and fisheye radius for further conversions.<a class="headerlink" href="#gui-to-determine-fisheye-camera-parameters-like-aperture-and-fisheye-radius-for-further-conversions" title="Permalink to this headline">¶</a></h1>
+<p>This is an important use case that any user needs to use once to get the parameters of the fisheye camera. These parameters are used in the conversion of fisheye image to any other type of image.
+The GUI makes it easy for users to determine these parameters for fisheye image/video from an unknown camera.</p>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>There are two main stages of using this GUI.</p>
+<ol class="arabic simple">
+<li><p>Finding the apparent radius of the fisheye camera and the camera center coordinates.</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Adjust the center of the circle using the <cite>cx</cite> and <cite>cy</cite> trackbars.</p></li>
+<li><p>Ensure the circle is in the center of the fisheye circle.</p></li>
+<li><p>Increase the radius of the circle and make sure the circle overlaps the fisheye camera output.</p></li>
+<li><p>Press escape for saving the radius and center coordinates.</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>Finding the aperture and refining the image center.</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>Increase the aperture to a large value using the <cite>aperture</cite> trackbar.</p></li>
+<li><p>Refine the centers using the <cite>cx</cite> and <cite>cy</cite> trackerbars. To do so, align the white small white circle with the intersection point of the horizontal and vertical green lines.</p></li>
+<li><p>Adjust the aperture such that the major portion of the image is aligned inside the left and right green vertical lines.</p></li>
+<li><p>Press escape for saving the aperture and refined center coordinates.</p></li>
+</ul>
+</div></blockquote>
+<p>Once the process is completed the parameters are saved in <cite>fisheyeParams.txt</cite>. You need to pass the path of this file when converting the fisheye image to any other format.</p>
+</div>
+<div class="section" id="sample-demo">
+<h2>Sample Demo<a class="headerlink" href="#sample-demo" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="id2">
+<img alt="_images/getRadius.gif" src="_images/getRadius.gif" />
+<p class="caption"><span class="caption-text">Step 1</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-center" id="id3">
+<img alt="_images/FisheyeParams.gif" src="_images/FisheyeParams.gif" />
+<p class="caption"><span class="caption-text">Step 2</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="reference external" href="Applications.html">Back to applications index</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
