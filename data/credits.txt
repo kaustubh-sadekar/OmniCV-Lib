@@ -1,0 +1,17 @@
+########## Credits and references to the opensources images used in the repository  ##############
+
+1. Following are the credits for equirect_temp1.jpg image
+photo credit: Rubiconrouge <a href="http://www.flickr.com/photos/62419339@N02/48939640116">Sentier des Pionniers, Gore, Qc (11)</a> via <a href="http://photopin.com">photopin</a> <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/">(license)</a>
+
+* website link : http://photopin.com/free-photos/equirectangular?license=noncommercial&sort=interestingness
+
+
+2. Following is the reference for equirect2.jpg image
+https://commons.wikimedia.org/wiki/File:Equirectangular_projection_SW.jpg
+
+3. Following is the reference and citation for fisheye.jpg and fisheye_horizontal.jpg images
+A. Eichenseer and A. Kaup, "A data set providing synthetic and real-world fisheye video sequences," 2016 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Shanghai, 2016, pp. 1541-1545, doi: 10.1109/ICASSP.2016.7471935.
+
+*website link : https://www.lms.tf.fau.eu/research/downloads/fisheye-data-set/
+
+
