@@ -200,6 +200,43 @@
 <ul class="simple">
 <li><p><strong>Improved speed</strong> of existing python code by optimising the code. Speed comparison is enlisted in the table below.</p></li>
 </ul>
+<table class="colwidths-given docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 19%" />
+<col style="width: 31%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Input image resolution</p></th>
+<th class="head"><p>Output image resolution</p></th>
+<th class="head"><p>Type of conversion performed</p></th>
+<th class="head"><p>py360convert</p></th>
+<th class="head"><p>OmniCV (ours)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>800x1600</p></td>
+<td><p>52.46 s</p></td>
+<td><p>Equirectangular to Perspective</p></td>
+<td><p>147 ms</p></td>
+<td><p>72 ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>800x1600</p></td>
+<td><p>12.73 s</p></td>
+<td><p>Equirectangular to Cubemap</p></td>
+<td><p>177 ms</p></td>
+<td><p>44 ms</p></td>
+</tr>
+<tr class="row-even"><td><p>768x1024</p></td>
+<td><p>3.48 s</p></td>
+<td><p>Cubemap to Equirectangular</p></td>
+<td><p>245 ms</p></td>
+<td><p>65 ms</p></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
 <li><p><strong>C++ based functions</strong> for above implimentations.</p></li>
 <li><p><strong>ROS compatible node</strong> for above implimentations.</p></li>
