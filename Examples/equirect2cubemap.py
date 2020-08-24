@@ -35,7 +35,6 @@ for i in range(20):
 print((time.time()-start)/20)
 print("Input shape",equiRect.shape)
 print("Output shape",cubemap.shape)
-# cv2.imwrite("cubemap.jpg",cubemap)
 cv2.imshow("cubemap",cubemap)
 cv2.imshow("Equirect",equiRect)
 cv2.waitKey(0)
