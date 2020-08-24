@@ -9,10 +9,10 @@ from omnicv import fisheyeImgConv
 Img_path = sys.argv[1]
 
 equiRect = cv2.imread(Img_path)
-cv2.namedWindow("image",cv2.WINDOW_NORMAL)
-cv2.imshow("image",equiRect)
+cv2.namedWindow("image", cv2.WINDOW_NORMAL)
+cv2.imshow("image", equiRect)
 cv2.waitKey(0)
-outShape = [250,250]
+outShape = [250, 250]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
@@ -41,8 +41,10 @@ cv2.waitKey(0)
 
 # """
 # For single image Double Sphere (DS) model
-fisheye = mapper.equirect2Fisheye_DS(equiRect,outShape=[250,250],f=90,a_=0.1,xi_=0.7,angles=[0,0,0])
-cv2.imshow("DS Model Output",fisheye)
+fisheye = mapper.equirect2Fisheye_DS(
+    equiRect, outShape=[250, 250], f=90, a_=0.1, xi_=0.7, angles=[0, 0, 0]
+)
+cv2.imshow("DS Model Output", fisheye)
 cv2.waitKey(0)
 # """
 

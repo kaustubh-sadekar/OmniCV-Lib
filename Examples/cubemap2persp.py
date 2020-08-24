@@ -9,10 +9,10 @@ from omnicv import fisheyeImgConv
 Img_path = sys.argv[1]
 
 equiRect = cv2.imread(Img_path)
-cv2.namedWindow("cubemap",cv2.WINDOW_NORMAL)
-cv2.imshow("cubemap",equiRect)
+cv2.namedWindow("cubemap", cv2.WINDOW_NORMAL)
+cv2.imshow("cubemap", equiRect)
 cv2.waitKey(0)
-outShape = [400,400]
+outShape = [400, 400]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
@@ -25,7 +25,7 @@ Theta = 0
 Phi = 0
 Hd = outShape[0]
 Wd = outShape[1]
-persp = mapper.cubemap2persp(equiRect,FOV,Theta,Phi,Hd,Wd)
-cv2.imshow("cubemap",persp)
+persp = mapper.cubemap2persp(equiRect, FOV, Theta, Phi, Hd, Wd)
+cv2.imshow("cubemap", persp)
 cv2.waitKey(0)
 # """

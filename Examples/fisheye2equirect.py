@@ -10,13 +10,13 @@ Img_path = sys.argv[1]
 param_file_path = "../fisheyeParams.txt"
 
 frame = cv2.imread(Img_path)
-cv2.namedWindow("image",cv2.WINDOW_NORMAL)
-cv2.resizeWindow("image",400,400)
-cv2.imshow("image",frame)
+cv2.namedWindow("image", cv2.WINDOW_NORMAL)
+cv2.resizeWindow("image", 400, 400)
+cv2.imshow("image", frame)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
-outShape = [200,400]
+outShape = [200, 400]
 inShape = frame.shape[:2]
 
 ########################### Uncomment the block to run a perticular experiment  ##########################
@@ -45,11 +45,11 @@ cv2.waitKey(0)
 # In case of fisheye lens placed horizontally
 # NOTE : This conversion is really helpful when we look at the perspective view.
 mapper = fisheyeImgConv(param_file_path)
-frame2 = mapper.fisheye2equirect(frame,outShape)
-frame2 = mapper.equirect2cubemap(frame2,modif=True)
-frame2 = mapper.cubemap2equirect(frame2,outShape)
-cv2.namedWindow("image",cv2.WINDOW_NORMAL)
-cv2.resizeWindow("image",800,400)
-cv2.imshow("image",frame2)
+frame2 = mapper.fisheye2equirect(frame, outShape)
+frame2 = mapper.equirect2cubemap(frame2, modif=True)
+frame2 = mapper.cubemap2equirect(frame2, outShape)
+cv2.namedWindow("image", cv2.WINDOW_NORMAL)
+cv2.resizeWindow("image", 800, 400)
+cv2.imshow("image", frame2)
 cv2.waitKey(0)
 # """

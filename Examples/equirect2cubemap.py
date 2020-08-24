@@ -31,13 +31,13 @@ cv2.waitKey(0)
 # For single image in dice form
 start = time.time()
 for i in range(20):
-	cubemap = mapper.equirect2cubemap(equiRect,side=256,dice=dice)
-print((time.time()-start)/20)
-print("Input shape",equiRect.shape)
-print("Output shape",cubemap.shape)
+    cubemap = mapper.equirect2cubemap(equiRect, side=256, dice=dice)
+print((time.time() - start) / 20)
+print("Input shape", equiRect.shape)
+print("Output shape", cubemap.shape)
 # cv2.imwrite("cubemap.jpg",cubemap)
-cv2.imshow("cubemap",cubemap)
-cv2.imshow("Equirect",equiRect)
+cv2.imshow("cubemap", cubemap)
+cv2.imshow("Equirect", equiRect)
 cv2.waitKey(0)
 # """
 
