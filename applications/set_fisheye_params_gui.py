@@ -5,7 +5,6 @@ import math
 import sys
 from omnicv import fisheyeImgConv
 
-# cap = cv2.VideoCapture("vid1.mp4")
 
 def nothing(x):
     pass
