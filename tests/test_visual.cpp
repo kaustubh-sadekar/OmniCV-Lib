@@ -84,7 +84,7 @@ int main()
 	cv::Mat cubemap;
 	std::cout << "[6] Testing fisheye2equirect method for mode=2..." << std::endl;
 	mapper1.fisheye2equirect(fisheye,equiRect, cv::Size (400,200));
-	mapper1.eqrect2cubemap(equiRect,cubemap,256,true,true);
+	mapper1.equirect2cubemap(equiRect,cubemap,256,true,true);
 	mapper1.cubemap2equirect(cubemap,cv::Size (400,200),equiRect);
 	img_path = "./outputs/f2e_out_mode2.jpg";
 	refImg = cv::imread(img_path);
@@ -99,7 +99,7 @@ int main()
 	assert(equiRect.cols != 0 && "Wrong path... Run the tests.py code after changing the directory inside test folder");
 
 	std::cout << "[7] Testing equirect2cubemap method for horizontal mode..." << std::endl;
-	mapper1.eqrect2cubemap(equiRect,cubemap,256);
+	mapper1.equirect2cubemap(equiRect,cubemap,256);
 	img_path = "./outputs/e2c_out.jpg";
 	refImg = cv::imread(img_path);
 	cv::imshow("output image",cubemap);
@@ -109,7 +109,7 @@ int main()
 	assert ((cubemap.cols==1536) && (cubemap.rows==256) &&"Output dimensions for generated cubemap image do not match !");
 
 	std::cout << "[8] Testing equirect2cubemap method for dice mode..." << std::endl;
-	mapper1.eqrect2cubemap(equiRect,cubemap,256,false,true);
+	mapper1.equirect2cubemap(equiRect,cubemap,256,false,true);
 	img_path = "./outputs/e2c_out_dice.jpg";
 	refImg = cv::imread(img_path);
 	cv::imshow("output image",cubemap);
