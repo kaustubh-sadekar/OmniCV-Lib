@@ -2,6 +2,7 @@
 #include<opencv2/opencv.hpp>
 #include"../omnicv/utils.hpp"
 #include <opencv2/core/core.hpp>
+#define CV_WINDOW_NORMAL 0
 
 // Creating the display window
 int H = 500;

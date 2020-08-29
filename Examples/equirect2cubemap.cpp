@@ -2,6 +2,7 @@
 #include<opencv2/opencv.hpp>
 #include"../omnicv/utils.hpp"
 #include <opencv2/core/core.hpp>
+#define CV_WINDOW_NORMAL 0
 
 // Creating the display window
 int H = 500;
@@ -22,7 +23,7 @@ int main()
   cv::imshow(WINDOW_NAME,frame);
   cv::waitKey(0);
 
-  mapper1.eqrect2cubemap(frame,outFrame,256,true,true);
+  mapper1.equirect2cubemap(frame,outFrame,256,true,true);
 
   cv::imshow(WINDOW_NAME,outFrame);
   cv::waitKey(0);
