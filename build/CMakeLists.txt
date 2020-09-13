@@ -20,9 +20,6 @@ set(HEADER_FILES
 # Include the headers folder for OpenCV
 include_directories( ${OpenCV_INCLUDE_DIRS})
 
-ADD_EXECUTABLE(main_output ../main_code.cpp ${SOURCE_FILES} ${HEADER_FILES})
-TARGET_LINK_LIBRARIES(main_output ${OpenCV_LIBS})
-
 ADD_EXECUTABLE(fisheye2equirect ../Examples/fisheye2equirect.cpp ${SOURCE_FILES} ${HEADER_FILES})
 TARGET_LINK_LIBRARIES(fisheye2equirect ${OpenCV_LIBS})
 
