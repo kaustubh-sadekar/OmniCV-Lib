@@ -10,7 +10,7 @@ Img_path = sys.argv[1]
 
 equiRect = cv2.imread(Img_path)
 
-outShape = [400,400]
+outShape = [400, 400]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
@@ -26,12 +26,12 @@ Wd = outShape[1]
 
 start = time.time()
 for i in range(20):
-	persp = mapper.eqruirect2persp(equiRect,FOV,Theta,Phi,Hd,Wd)
-print((time.time()-start)/20)
-print("Input shape",equiRect.shape)
-print("Output shape",persp.shape)
-cv2.imshow("perspective",persp)
-cv2.imshow("equirect",equiRect)
+    persp = mapper.eqruirect2persp(equiRect, FOV, Theta, Phi, Hd, Wd)
+print((time.time() - start) / 20)
+print("Input shape", equiRect.shape)
+print("Output shape", persp.shape)
+cv2.imshow("perspective", persp)
+cv2.imshow("equirect", equiRect)
 cv2.waitKey(0)
 # """
 

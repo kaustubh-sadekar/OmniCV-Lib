@@ -9,10 +9,10 @@ from omnicv import fisheyeImgConv
 Img_path = sys.argv[1]
 
 cubemap = cv2.imread(Img_path)
-cv2.namedWindow("Image",cv2.WINDOW_NORMAL)
-cv2.imshow("Image",cubemap)
+cv2.namedWindow("Image", cv2.WINDOW_NORMAL)
+cv2.imshow("Image", cubemap)
 cv2.waitKey(0)
-outShape = [400,800]
+outShape = [400, 800]
 inShape = cubemap.shape[:2]
 mapper = fisheyeImgConv()
 
@@ -24,11 +24,11 @@ mapper = fisheyeImgConv()
 start = time.time()
 
 for i in range(20):
-	equirect = mapper.cubemap2equirect(cubemap,outShape)
-print((time.time()-start)/20)
-print("Input shape",cubemap.shape)
-print("Output shape",equirect.shape)
-cv2.imshow("Image",equirect)
+    equirect = mapper.cubemap2equirect(cubemap, outShape)
+print((time.time() - start) / 20)
+print("Input shape", cubemap.shape)
+print("Output shape", equirect.shape)
+cv2.imshow("Image", equirect)
 cv2.waitKey(0)
 # """
 
