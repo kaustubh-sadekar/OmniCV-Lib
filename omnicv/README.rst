@@ -34,6 +34,13 @@ A custom make file has been written which provides quick and easy options for in
     # To build only c++ files
     make build-cpp
 
+Installing OmniCV in a virtual environment using pipenv. Pipfile and Pipfile.lock files have been provided. Copy both the files to the present working directory. Then simply run the following commands to setup OmniCV in a local environment.
+
+.. code:: shell
+
+    pipenv install
+    pipenv shell    
+
 
 Running Tests
 =============
