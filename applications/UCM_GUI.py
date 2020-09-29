@@ -1,8 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
-import time
 import sys
 from omnicv import fisheyeImgConv
 

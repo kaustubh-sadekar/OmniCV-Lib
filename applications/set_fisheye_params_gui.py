@@ -1,10 +1,7 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
 import sys
 from omnicv import fisheyeImgConv
-
 
 
 def nothing(x):
@@ -51,7 +48,9 @@ frame = cv2.imread(Image_Path)
 frame = cv2.circle(
     frame, (frame.shape[1] // 2, frame.shape[0] // 2), 4, (255, 255, 255), -1
 )
-frame = cv2.circle(frame, (frame.shape[1] // 2, frame.shape[0] // 2), 2, (0, 0, 0), -1)
+frame = cv2.circle(frame,
+                   (frame.shape[1] // 2, frame.shape[0] // 2),
+                   2, (0, 0, 0), -1)
 
 outShape = [400, 800]
 inShape = frame.shape[:2]
