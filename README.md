@@ -4,9 +4,11 @@
 
 
 <p align="center">
+  <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-build"><img alt="python-build" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-build/badge.svg"></a>
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-tests"><img alt="python-tests" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-tests/badge.svg"></a>
   <a href="https://badge.fury.io/py/omnicv"><img src="https://badge.fury.io/py/omnicv.svg" alt="PyPI version" height="18"></a>
 </p>
+
 
 A **computer vision library for omnidirectional(360&deg;) cameras**. This package is divided into two parts:
 * **Basic functions** for inter-conversion of different types of mappings associated with omni directional cameras, virtual reality and 360&deg; videos, like cubemap, spherical projections, perspective projection and equirectangular projection.
