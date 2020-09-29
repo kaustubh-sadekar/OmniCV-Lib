@@ -15,6 +15,11 @@ help:
 	@echo "To test Python and C++ extension of the project type make test-all"
 	@echo "To run visual tests for Python and C++ extension type make test-all-gui"
 	@echo "------------------------------------"
+lint:
+	@echo "================ \n"
+	@echo "Lint with flake8 \n"
+	@echo "================ \n"
+	flake8 --per-file-ignores="__init__.py:F403,F401" && cd ../ && flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics && flake8 Examples/ && flake8 applications
 
 build-py:
 	@echo "=============================================== \n"
@@ -31,12 +36,6 @@ test-py:
 	@echo "=============================================== \n"
 	cd ../tests/ && ${PYTHON} -W ignore -m pytest --ignore=./test_visual.py
 
-test-py-gui:
-	@echo "=============================================== \n"
-	@echo "Running visual tests for Python extension \n"
-	@echo "=============================================== \n"
-	cd ../tests/ && ${PYTHON} -W ignore -m pytest -s --ignore=./test_.py && ./test
-	
 build-cpp:
 	@echo "=============================================== \n"
 	@echo "Building omnicv c++ files"
@@ -50,12 +49,6 @@ test-cpp:
 	@echo "=============================================== \n"
 	cd ../tests/ && ./test
 
-test-cpp-gui:
-	@echo "=============================================== \n"
-	@echo "Running visual tests for C++ extension \n"
-	@echo "=============================================== \n"
-	cd ../tests/ && ./test_visual
-
 build-all:
 	$(MAKE) build-py
 	$(MAKE) build-cpp
@@ -64,6 +57,22 @@ test-all:
 	$(MAKE) test-py
 	$(MAKE) test-cpp
 
-test-all-gui:
-	$(MAKE) test-py-gui
-	$(MAKE) test-cpp-gui
+build:	
+	@echo "=============================================== \n"
+	@echo "Installing omnicv python library from source"
+	@echo "=============================================== \n"
+	cd ../ && sudo ${PYTHON} setup.py install
+	@echo "=============================================== \n"
+	@echo "Building omnicv c++ files"
+	@echo "=============================================== \n"
+	cd ../build/ && cmake -Wno-dev CMakeLists.txt && $(MAKE)
+	@echo "=============================================== \n"
+	@echo "Running tests \n"
+	@echo "=============================================== \n"
+	$(MAKE) test
+
+test:
+	cd ../tests/ && ${PYTHON} -W ignore -m pytest --ignore=./test_visual.py && ./test
+
+test-gui:
+	cd ../tests/ && ${PYTHON} -W ignore -m pytest -s --ignore=./test_.py && ./test
