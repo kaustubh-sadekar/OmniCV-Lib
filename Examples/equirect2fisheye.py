@@ -1,8 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
-import time
 import sys
 from omnicv import fisheyeImgConv
 
@@ -16,7 +13,7 @@ outShape = [250, 250]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
-##############  Uncomment any of the given block to run desired example  ######################
+# Uncomment any of the given block to run desired example
 
 """
 # For single image Unified Camera model (UCM)
@@ -27,14 +24,16 @@ cv2.waitKey(0)
 
 """
 # For single image Extended UCM model
-fisheye = mapper.equirect2Fisheye_EUCM(equiRect,outShape=[250,250],f=100,a_=0.4,b_=2,angles=[0,0,0])
+fisheye = mapper.equirect2Fisheye_EUCM(equiRect,
+                                       outShape=[250,250],f=100,a_=0.4,b_=2,angles=[0,0,0])
 cv2.imshow("EUCM Model Output",fisheye)
 cv2.waitKey(0)
 """
 
 """
 # For single image Field Of Vide (FOV) model
-fisheye = mapper.equirect2Fisheye_FOV(equiRect,outShape=[250,250],f=40,w_=0.5,angles=[0,0,0])
+fisheye = mapper.equirect2Fisheye_FOV(equiRect,
+                                      outShape=[250,250],f=40,w_=0.5,angles=[0,0,0])
 cv2.imshow("FOV model Output",fisheye)
 cv2.waitKey(0)
 """
@@ -71,7 +70,8 @@ cv2.imshow("fisheye",fisheye)
 cv2.waitKey(0)
 
 # Rotate the sphere
-fisheye = mapper.equirect2Fisheye_UCM(equiRect,outShape=outShape,angles=[0,0,0])
+fisheye = mapper.equirect2Fisheye_UCM(equiRect,
+                                      outShape=outShape,angles=[0,0,0])
 cv2.imshow("fisheye",fisheye)
 cv2.waitKey(0)
 

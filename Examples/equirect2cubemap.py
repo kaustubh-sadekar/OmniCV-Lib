@@ -1,7 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
 import time
 import sys
 from omnicv import fisheyeImgConv
@@ -16,13 +14,12 @@ inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
 
-##############  Uncomment any of the given block to run desired example  ######################
+# Uncomment any of the given block to run desired example
 
 """
 # For single image in horiontal form
 cubemap = mapper.equirect2cubemap(equiRect,side=256,modif=0,dice=dice)
 cv2.namedWindow("cubemap",cv2.WINDOW_NORMAL)
-# cv2.imwrite("../data/cubemap.jpg",cubemap)
 cv2.imshow("cubemap",cubemap)
 cv2.waitKey(0)
 """
@@ -35,7 +32,6 @@ for i in range(20):
 print((time.time() - start) / 20)
 print("Input shape", equiRect.shape)
 print("Output shape", cubemap.shape)
-# cv2.imwrite("cubemap.jpg",cubemap)
 cv2.imshow("cubemap", cubemap)
 cv2.imshow("Equirect", equiRect)
 cv2.waitKey(0)

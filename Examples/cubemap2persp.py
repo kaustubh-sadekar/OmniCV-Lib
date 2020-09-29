@@ -1,8 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
-import time
 import sys
 from omnicv import fisheyeImgConv
 
@@ -16,10 +13,12 @@ outShape = [400, 400]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
-##############  Uncomment any of the given block to run desired example  ######################
+# Uncomment any of the given block to run desired example
 
 # """
-# NOTE : for cubemap2persp conversion you need to always call the cubemap2persp method
+# Note: for cubemap2persp conversion you need to always
+# call the cubemap2persp method
+
 FOV = 90
 Theta = 0
 Phi = 0

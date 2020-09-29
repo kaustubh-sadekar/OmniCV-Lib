@@ -1,7 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
 import time
 import sys
 from omnicv import fisheyeImgConv
@@ -16,11 +14,13 @@ outShape = [400, 800]
 inShape = cubemap.shape[:2]
 mapper = fisheyeImgConv()
 
-##############  Uncomment any of the given block to run desired example  ######################
+#  Uncomment any of the given block to run desired example
 
 # """
 # For single image in horiontal or dice form
-# NOTE : The software can automatically determine if the cubemap format is in dice form or horizontal form based on height to width ratio.
+# Note : The software can automatically determine if the cubemap format
+# is in dice form or horizontal form based on height to width ratio.
+
 start = time.time()
 
 for i in range(20):

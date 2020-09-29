@@ -1,7 +1,5 @@
 #!/usr/bin/env/python
 import cv2
-import numpy as np
-import math
 import time
 import sys
 from omnicv import fisheyeImgConv
@@ -14,7 +12,7 @@ outShape = [400, 400]
 inShape = equiRect.shape[:2]
 mapper = fisheyeImgConv()
 
-##############  Uncomment any of the given block to run desired example  ######################
+# Uncomment any of the given block to run desired example
 
 # """
 # For single image
@@ -36,7 +34,9 @@ cv2.waitKey(0)
 # """
 
 """
-# If the mapping is not changing you can use applyMap method else you need to call the getPerspective method with changing parameters
+# If the mapping is not changing you can use applyMap method else you need
+# to call the getPerspective method with changing parameters
+
 FOV = 90
 Theta = 0
 Phi = 0
