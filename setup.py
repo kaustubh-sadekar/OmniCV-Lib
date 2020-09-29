@@ -13,17 +13,19 @@ try:
 except:
     long_description = description
 
+version = '1.1.2'
+
 setup(
   name = 'omnicv',
   packages = ['omnicv'],
-  version = '1.1.0',
+  version = version,
   license='MIT',        
   description = description,
   long_description=long_description,
   long_description_content_type="text/x-rst",
   author = 'Kaustubh Sadekar, Leena Vachhani, Abhishek Gupta',
   url = 'https://kaustubh-sadekar.github.io/OmniCV-Lib/index.html',
-  download_url = 'https://github.com/kaustubh-sadekar/OmniCV-Lib/archive/v_1.1.0.tar.gz',
+  download_url = 'https://github.com/kaustubh-sadekar/OmniCV-Lib/archive/v_%s.tar.gz'%version,
   keywords = ['Deep Learning', 'Helper functions'],
   package_data={'':['README.rst']},
   classifiers=[
