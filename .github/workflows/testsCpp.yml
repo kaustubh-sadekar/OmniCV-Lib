@@ -1,21 +1,14 @@
-name: CMake
-
-on: [push]
-
-env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+ 
+name: Basic
+on: push
 
 jobs:
-  build:
-    # The CMake configure and build commands are platform agnostic and should work equally
-    # well on Windows or Mac.  You can convert this to a matrix build if you need
-    # cross-platform coverage.
-    # See: https://docs.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix
+  test:
     runs-on: ubuntu-latest
-    
+    name: Test the action
     steps:
-    - uses: actions/checkout@v2
-    - uses: Dovyski/setup-opencv-action@v1
-    with:
-      opencv-version: '4.0.0'
+    - uses: actions/checkout@v1
+    - name: Install OpenCV
+      uses: ./ # Uses an action in the root directory
+      with:
+        opencv-version: '4.0.0'
