@@ -33,4 +33,4 @@ jobs:
        cd ~
        sudo apt-get install build-essential gnome-devel
        cd /home/runner/work/OmniCV-Lib/OmniCV-Lib/omnicv
-       ls
+       make build-cpp
