@@ -15,5 +15,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: |
-       cd ../../OmniCV-Lib/
-       ls OmniCV-Lib/
+       cd ~
+       cd ../../OmniCV-Lib/OmniCV-Lib/omnicv
+       make build-py
