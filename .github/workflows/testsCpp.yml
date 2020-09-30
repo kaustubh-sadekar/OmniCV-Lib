@@ -16,5 +16,5 @@ jobs:
     - name: Install dependencies
       run: |
        cd ~
-       cd ../../OmniCV-Lib/OmniCV-Lib/
+       cd ../../OmniCV-Lib/
        ls
