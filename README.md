@@ -4,6 +4,7 @@
 
 
 <p align="center">
+  <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Acpp-build"><img alt="cpp build" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/cpp-build/badge.svg"></a>
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-build"><img alt="build" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-build/badge.svg"></a>
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-tests"><img alt="tests" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-tests/badge.svg"></a>
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3ACD-PyPi"><img alt="CD-PyPi" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/CD-PyPi/badge.svg"></a>
