@@ -15,5 +15,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: |
+       pwd
+       cd ~
+       pwd
        cd ../../OmniCV-Lib/
        ls
