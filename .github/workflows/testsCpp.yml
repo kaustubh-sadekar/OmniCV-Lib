@@ -37,3 +37,6 @@ jobs:
        
        sudo apt-get install build-essential gnome-devel
        echo pwd
+       
+       cd omnicv
+       make build-cpp
