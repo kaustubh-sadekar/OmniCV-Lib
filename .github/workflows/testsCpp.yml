@@ -17,5 +17,5 @@ jobs:
       run: |
        cd ../../
        pwd
-       ls
+       cd OmniCV-Lib
        cd omnicv
