@@ -1,5 +1,5 @@
  
-name: Basic
+name: cpp-build
 on: push
 
 jobs:
@@ -12,3 +12,7 @@ jobs:
       uses: ./ # Uses an action in the root directory
       with:
         opencv-version: '4.0.0'
+    - name: build omnicv
+      run: |
+       echo pwd
+      
