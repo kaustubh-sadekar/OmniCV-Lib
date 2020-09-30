@@ -5,8 +5,7 @@
 
 <p align="center">
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Acpp-build-test"><img alt="cpp build and test" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/cpp-build-test/badge.svg"></a>
-  <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-build"><img alt="build" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-build/badge.svg"></a>
-  <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-tests"><img alt="tests" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-tests/badge.svg"></a>
+  <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3Apython-build-test"><img alt="build" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/python-build-test/badge.svg"></a>
   <a href="https://github.com/kaustubh-sadekar/OmniCV-Lib/actions?query=workflow%3ACD-PyPi"><img alt="CD-PyPi" src="https://github.com/kaustubh-sadekar/OmniCV-Lib/workflows/CD-PyPi/badge.svg"></a>
   <a href="https://badge.fury.io/py/omnicv"><img src="https://badge.fury.io/py/omnicv.svg" alt="PyPI version" height="18"></a>
 </p>
