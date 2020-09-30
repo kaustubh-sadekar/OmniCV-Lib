@@ -16,5 +16,5 @@ jobs:
     - name: Install dependencies
       run: |
        cd ~
-       cd ../../OmniCV-Lib/OmniCV-Lib/omnicv
-       make build-py
+       cd ../../OmniCV-Lib/OmniCV-Lib/
+       ls
