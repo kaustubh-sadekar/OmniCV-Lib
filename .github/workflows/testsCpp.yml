@@ -1,14 +1,21 @@
- 
 name: cpp-build
-on: push
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
-    name: Test the action
+    
     steps:
-    - uses: actions/checkout@v1
-    - name: Install OpenCV
-      uses: ./ # Uses an action in the root directory
-      with:
-        opencv-version: '4.0.0'  
+    - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+       sudo apt-get update
+       sudo apt-get upgrade
+       sudo apt-get install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+       
