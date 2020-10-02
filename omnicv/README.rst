@@ -60,18 +60,5 @@ To run non-visual tests
     make test-cpp
 
 
-To run visual tests
-
-.. code:: shell
-
-    cd OmniCV-Lib/omnicv/
-    # To run visual test only python extension of the project
-    make test-py-gui
-    # To run visual test only c++ extension of the project
-    make test-cpp-gui
-    # To run visual test python as well as c++ extension of the project
-    make test-all-visual
-
-
 Examples are available `here <https://kaustubh-sadekar.github.io/OmniCV-Lib/index.html>`_ on the official documentation page.
 
