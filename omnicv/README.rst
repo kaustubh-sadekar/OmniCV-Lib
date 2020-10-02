@@ -45,10 +45,6 @@ Installing OmniCV in a virtual environment using pipenv. Pipfile and Pipfile.loc
 Running Tests
 =============
 
-There are two types of tests provided for users. Being a vision based package visual tests have also been provided.
-
-To run non-visual tests
-
 .. code:: shell
 
     cd OmniCV-Lib/omnicv/
