@@ -53,7 +53,7 @@ Running Tests
     # To test only c++ extension of the project
     make test-cpp
     # To test python as well as c++ extension of the project
-    make test-cpp
+    make test-all
 
 
 Examples are available `here <https://kaustubh-sadekar.github.io/OmniCV-Lib/index.html>`_ on the official documentation page.
