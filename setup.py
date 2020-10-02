@@ -13,7 +13,7 @@ try:
 except:
     long_description = description
 
-version = '1.1.2'
+version = '1.1.3'
 
 setup(
   name = 'omnicv',
