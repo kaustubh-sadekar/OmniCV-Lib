@@ -74,37 +74,58 @@ Horizontal and vertical orientation viewing mode support
   * GUI to view an equirectangular image in 360&deg; format with control trackbars to change FOV(Field Of View) and viewing angles. (You can download any 360&deg; video **from youtube** and view it using the GUI and **enjoy the 360&deg; viewing experience**).
 
 ## Installation guide
-##### Python version
-The python version of the package is available on PyPi and can be installed using pip.
+A custom make file has been written which provides quick and easy options for installing and testing the library.
+
 ```shell
-pip3 install requirements.txt
-pip3 install omnicv
+
+    git clone https://github.com/kaustubh-sadekar/OmniCV-Lib
+    cd OmniCV-Lib/omnicv/
+    # To build c++ as well as python files
+    make build-all
+    # To build only python files
+    make build-python
+    # To build only c++ files
+    make build-cpp
+ ```
+
+Installing OmniCV in a virtual environment using pipenv. Pipfile and Pipfile.lock files have been provided. Copy both the files to the present working directory. Then simply run the following commands to setup OmniCV in a local environment.
+
+```shell
+
+    pipenv install
+    pipenv shell    
 ```
 
-To download it from source 
-* Clone the repository
-* Run the setup.py file
+## Running Tests
+
+There are two types of tests provided for users. Being a vision based package visual tests have also been provided.
+
+To run non-visual tests
+
 ```shell
-git clone https://github.com/kaustubh-sadekar/OmniCV.git
-cd OmniCV/
-sudo python3 setup.py install
+
+    cd OmniCV-Lib/omnicv/
+    # To test only python extension of the project
+    make test-py
+    # To test only c++ extension of the project
+    make test-cpp
+    # To test python as well as c++ extension of the project
+    make test-cpp
 ```
 
-##### C++ version
-To install the C++ extensions follow the below steps.
-* Clone the repository
-* cd to build directory
-* build the files using cmake
-* Include `imgMap.cpp, utils.hpp` in the `CMakeLists.txt`.
+To run visual tests
+
 ```shell
-git clone https://github.com/kaustubh-sadekar/OmniCV.git
-cd OmniCV/build
-cmake CMakeLists.txt
-make
-cd ..
-# run the built code (here main_code.cpp)
-./build/main_code
+
+    cd OmniCV-Lib/omnicv/
+    # To run visual test only python extension of the project
+    make test-py-gui
+    # To run visual test only c++ extension of the project
+    make test-cpp-gui
+    # To run visual test python as well as c++ extension of the project
+    make test-all-visual
 ```
+
 ##### ROS Nodes
 To build the ROS nodes follow these steps:
 * Create a folder named omnicv in your ros workspace where you have your other ros packages
@@ -121,15 +142,4 @@ cp OmniCV/ros_files/ [PATH TO ROS WORKSPACE]/src/omnicv/
 roscd
 catkin_make
 ```
-
-## Running the tests
-
-After installing the library, run the following commands to run the non visual and visual tests respectively.
-
-```shell
-cd OmniCV/tests/
-# Non visual tests
-bash test.sh 0
-# Visual tests
-bash test.sh 1
 ```
