@@ -113,19 +113,6 @@ To run non-visual tests
     make test-cpp
 ```
 
-To run visual tests
-
-```shell
-
-    cd OmniCV-Lib/omnicv/
-    # To run visual test only python extension of the project
-    make test-py-gui
-    # To run visual test only c++ extension of the project
-    make test-cpp-gui
-    # To run visual test python as well as c++ extension of the project
-    make test-all-visual
-```
-
 ##### ROS Nodes
 To build the ROS nodes follow these steps:
 * Create a folder named omnicv in your ros workspace where you have your other ros packages
