@@ -98,10 +98,6 @@ Installing OmniCV in a virtual environment using pipenv. Pipfile and Pipfile.loc
 
 ## Running Tests
 
-There are two types of tests provided for users. Being a vision based package visual tests have also been provided.
-
-To run non-visual tests
-
 ```shell
 
     cd OmniCV-Lib/omnicv/
@@ -110,7 +106,7 @@ To run non-visual tests
     # To test only c++ extension of the project
     make test-cpp
     # To test python as well as c++ extension of the project
-    make test-cpp
+    make test-all
 ```
 
 ##### ROS Nodes
