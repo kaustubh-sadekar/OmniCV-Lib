@@ -5,15 +5,13 @@ PYTHON = python3
 
 help:
 	@echo "---------------HELP-----------------"
+	@echo "To test for linting errors type make lint"
 	@echo "To build only python extension type make build-py"
 	@echo "To build only C++ extension type make build-cpp"
 	@echo "To build both python and C++ extensions type make build-all"
 	@echo "To test only python extension of the project type make test-py"
-	@echo "To run visual tests for only python extension type make test-py-gui"
 	@echo "To test only C++ extension of the project type make test-cpp"
-	@echo "To run visual tests for only C++ extension type make test-cpp-gui"
 	@echo "To test Python and C++ extension of the project type make test-all"
-	@echo "To run visual tests for Python and C++ extension type make test-all-gui"
 	@echo "------------------------------------"
 lint:
 	@echo "================ \n"
