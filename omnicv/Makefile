@@ -32,7 +32,7 @@ test-py:
 	@echo "=============================================== \n"
 	@echo "Running tests for Python extension \n"
 	@echo "=============================================== \n"
-	cd ../tests/ && ${PYTHON} -W ignore -m pytest --ignore=./test_visual.py
+	cd ../tests/ && ${PYTHON} -W ignore -m pytest
 
 build-cpp:
 	@echo "=============================================== \n"
@@ -54,23 +54,3 @@ build-all:
 test-all:
 	$(MAKE) test-py
 	$(MAKE) test-cpp
-
-build:	
-	@echo "=============================================== \n"
-	@echo "Installing omnicv python library from source"
-	@echo "=============================================== \n"
-	cd ../ && sudo ${PYTHON} setup.py install
-	@echo "=============================================== \n"
-	@echo "Building omnicv c++ files"
-	@echo "=============================================== \n"
-	cd ../build/ && cmake -Wno-dev CMakeLists.txt && $(MAKE)
-	@echo "=============================================== \n"
-	@echo "Running tests \n"
-	@echo "=============================================== \n"
-	$(MAKE) test
-
-test:
-	cd ../tests/ && ${PYTHON} -W ignore -m pytest --ignore=./test_visual.py && ./test
-
-test-gui:
-	cd ../tests/ && ${PYTHON} -W ignore -m pytest -s --ignore=./test_.py && ./test
