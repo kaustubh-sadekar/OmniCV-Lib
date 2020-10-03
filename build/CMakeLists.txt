@@ -40,7 +40,3 @@ TARGET_LINK_LIBRARIES(equirect2fisheye ${OpenCV_LIBS})
 
 ADD_EXECUTABLE(../tests/test ../tests/test.cpp ${SOURCE_FILES} ${HEADER_FILES})
 TARGET_LINK_LIBRARIES(../tests/test ${OpenCV_LIBS})
-
-ADD_EXECUTABLE(../tests/test_visual ../tests/test_visual.cpp ${SOURCE_FILES} ${HEADER_FILES})
-TARGET_LINK_LIBRARIES(../tests/test_visual ${OpenCV_LIBS})
-
