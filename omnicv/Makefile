@@ -47,10 +47,6 @@ test-cpp:
 	@echo "=============================================== \n"
 	cd ../tests/ && ./test
 
-build-all:
-	$(MAKE) build-py
-	$(MAKE) build-cpp
+build-all: build-py build-cpp
 
-test-all:
-	$(MAKE) test-py
-	$(MAKE) test-cpp
+test-all: test-py test-cpp
