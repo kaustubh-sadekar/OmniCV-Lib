@@ -289,7 +289,7 @@ class fisheyeImgConv:
         tp[:, 7 * w // 8:] = 2
 
         # Prepare ceil mask
-        mask = np.zeros((h, w // 4), np.bool)
+        mask = np.zeros((h, w // 4), bool)
         idx = np.linspace(-np.pi, np.pi, w // 4) / 4
         idx = h // 2 - np.round(np.arctan(np.cos(idx)) * h / np.pi).astype(int)
         for i, j in enumerate(idx):
@@ -386,7 +386,7 @@ class fisheyeImgConv:
         z_map = -np.tile((np.arange(0, Hd) - c_y) * h_interval, [Wd, 1]).T
         D = np.sqrt(x_map ** 2 + y_map ** 2 + z_map ** 2)
 
-        xyz = np.zeros([Hd, Wd, 3], np.float)
+        xyz = np.zeros([Hd, Wd, 3], np.float32)
         xyz[:, :, 0] = (x_map / D)[:, :]
         xyz[:, :, 1] = (y_map / D)[:, :]
         xyz[:, :, 2] = (z_map / D)[:, :]
@@ -400,13 +400,13 @@ class fisheyeImgConv:
         xyz = np.dot(R1, xyz)
         xyz = np.dot(R2, xyz).T
         lat = np.arcsin(xyz[:, 2] / 1)
-        lon = np.zeros([Hd * Wd], np.float)
+        lon = np.zeros([Hd * Wd], np.float32)
         theta = np.arctan(xyz[:, 1] / xyz[:, 0])
         idx1 = xyz[:, 0] > 0
         idx2 = xyz[:, 1] > 0
 
-        idx3 = ((1 - idx1) * idx2).astype(np.bool)
-        idx4 = ((1 - idx1) * (1 - idx2)).astype(np.bool)
+        idx3 = ((1 - idx1) * idx2).astype(bool)
+        idx4 = ((1 - idx1) * (1 - idx2)).astype(bool)
 
         lon[idx1] = theta[idx1]
         lon[idx3] = theta[idx3] + np.pi
@@ -464,7 +464,7 @@ class fisheyeImgConv:
         y_map = np.tile((np.arange(0, Wd) - c_x) * w_interval, [Hd, 1])
         z_map = -np.tile((np.arange(0, Hd) - c_y) * h_interval, [Wd, 1]).T
         D = np.sqrt(x_map ** 2 + y_map ** 2 + z_map ** 2)
-        xyz = np.zeros([Hd, Wd, 3], np.float)
+        xyz = np.zeros([Hd, Wd, 3], np.float32)
         xyz[:, :, 0] = (1 / D * x_map)[:, :]
         xyz[:, :, 1] = (1 / D * y_map)[:, :]
         xyz[:, :, 2] = (1 / D * z_map)[:, :]
@@ -478,13 +478,13 @@ class fisheyeImgConv:
         xyz = np.dot(R1, xyz)
         xyz = np.dot(R2, xyz).T
         lat = np.arcsin(xyz[:, 2] / 1)
-        lon = np.zeros([Hd * Wd], np.float)
+        lon = np.zeros([Hd * Wd], np.float32)
         theta = np.arctan(xyz[:, 1] / xyz[:, 0])
         idx1 = xyz[:, 0] > 0
         idx2 = xyz[:, 1] > 0
 
-        idx3 = ((1 - idx1) * idx2).astype(np.bool)
-        idx4 = ((1 - idx1) * (1 - idx2)).astype(np.bool)
+        idx3 = ((1 - idx1) * idx2).astype(bool)
+        idx4 = ((1 - idx1) * (1 - idx2)).astype(bool)
 
         lon[idx1] = theta[idx1]
         lon[idx3] = theta[idx3] + np.pi
