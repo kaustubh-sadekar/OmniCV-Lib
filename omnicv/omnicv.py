@@ -113,10 +113,8 @@ class fisheyeImgConv:
         )
         theta = np.arctan2(z, x)
 
-        self.map_x = np.multiply(r, np.cos(theta)).T.astype(np.float32)
-        + self.Cx
-        self.map_y = np.multiply(r, np.sin(theta)).T.astype(np.float32)
-        + self.Cy
+        self.map_x = np.multiply(r, np.cos(theta)).T.astype(np.float32) + self.Cx
+        self.map_y = np.multiply(r, np.sin(theta)).T.astype(np.float32) + self.Cy
 
         return cv2.remap(
             srcFrame,
